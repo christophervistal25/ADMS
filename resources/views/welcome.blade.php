@@ -7,6 +7,7 @@
         <title>Laravel</title>
     </head>
     <body>
-        <a href=" {{ route('patient.auth.login') }}">Sign In</a>
+        <a href=" {{ route('patient.auth.login') }}">Patient Sign In</a>
+        <a href=" {{ route('admin.auth.login') }}">Admin Sign In</a>
     </body>
 </html>

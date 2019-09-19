@@ -3,11 +3,10 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Patient extends Authenticatable
+class Patient extends Authenticatable 
 {
     use Notifiable;
 
@@ -37,6 +36,5 @@ class Patient extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-   
+       
 }

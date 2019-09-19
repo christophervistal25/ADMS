@@ -5,7 +5,10 @@ Route::get('/', function () {
 });
 
 
+Route::redirect('login', '/patient/login', 301);
+
 Auth::routes();
+
 
 
 Route::group(['prefix' => 'admin'] , function () {
@@ -18,11 +21,10 @@ Route::group(['prefix' => 'admin'] , function () {
 
 
 Route::group(['prefix' => 'patient'] , function () {
-	Route::get('/', 'PatientController@index')->name('patient.dashboard');
-  	Route::get('dashboard', 'PatientController@index')->name('patient.dashboard');
+    Route::get('/', 'PatientController@index')->name('patient.dashboard');
+    Route::get('dashboard', 'PatientController@index')->name('patient.dashboard');
+    Route::post('logout', 'Auth\PatientLoginController@logout')->name('patient.auth.logout');
   	Route::get('login', 'Auth\PatientLoginController@login')->name('patient.auth.login');
   	Route::post('login', 'Auth\PatientLoginController@loginPatient')->name('patient.auth.loginPatient');
-  	Route::post('logout', 'Auth\PatientLoginController@logout')->name('patient.auth.logout');
 });
-
 

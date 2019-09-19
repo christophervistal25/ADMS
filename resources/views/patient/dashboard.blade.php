@@ -1,4 +1,4 @@
-@extends('patient.layouts.dashboard-template')
+@extends('templates.dashboard-template')
 @section('title', 'Dashboard')
 @section('content')
 <div class="row">

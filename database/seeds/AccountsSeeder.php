@@ -16,7 +16,7 @@ class AccountsSeeder extends Seeder
     {
         Patient::create([
             'name' => 'Christopher Vistal',
-            'email' => 'christopher@yahoo.com',
+            'email' => 'christophervistal26@gmail.com',
             'password' => bcrypt(1234),
         ]);
 

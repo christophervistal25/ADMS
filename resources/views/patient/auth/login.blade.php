@@ -42,7 +42,7 @@
               </div>
               <div>
                 <input class="btn btn-default submit" type="submit" value="Log in">
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <a class="reset_pass" href="{{ route('password.request') }}">Lost your password?</a>
               </div>
 
               <div class="clearfix"></div>
