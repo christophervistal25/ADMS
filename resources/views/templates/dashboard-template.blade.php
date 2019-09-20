@@ -30,11 +30,11 @@
                       <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                          <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                          <li><a><i class="fa fa-home"></i> Appointment <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                              <li><a href="index.html">Dashboard</a></li>
-                              <li><a href="index2.html">Dashboard2</a></li>
-                              <li><a href="index3.html">Dashboard3</a></li>
+                              <li><a href="{{ route('appointment.create') }}">Set Appointment</a></li>
+                              <li><a href="index.html">Upcoming Appointments</a></li>
+                              <li><a href="index2.html">Appointment History</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -110,6 +110,14 @@
                               <li><a href="index.html">Dashboard</a></li>
                               <li><a href="index2.html">Dashboard2</a></li>
                               <li><a href="index3.html">Dashboard3</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+                         <ul class="nav side-menu">
+                          <li><a><i class="fa fa-home"></i> Doctors <span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                              <li><a href="{{ route('doctor.index') }}">List of doctors</a></li>
+                              <li><a href="{{ route('doctor.create') }}">Add new doctor</a></li>
                             </ul>
                           </li>
                         </ul>

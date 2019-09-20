@@ -6,6 +6,15 @@ Route::get('/', function () {
 
 
 Route::redirect('login', '/patient/login', 301);
+Route::get('sample', function () {
+  $test = [
+    'id' => 1,
+    'title' => 'Sample',
+    'start' => 'September 20, 2019',
+  ];
+
+  return $test;
+});
 
 Auth::routes();
 
@@ -17,6 +26,8 @@ Route::group(['prefix' => 'admin'] , function () {
   	Route::get('login', 'Auth\AdminLoginController@login')->name('admin.auth.login');
   	Route::post('login', 'Auth\AdminLoginController@loginAdmin')->name('admin.auth.loginAdmin');
   	Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.auth.logout');
+
+    Route::resource('doctor', 'Admin\DoctorController');
 });
 
 
@@ -26,5 +37,7 @@ Route::group(['prefix' => 'patient'] , function () {
     Route::post('logout', 'Auth\PatientLoginController@logout')->name('patient.auth.logout');
   	Route::get('login', 'Auth\PatientLoginController@login')->name('patient.auth.login');
   	Route::post('login', 'Auth\PatientLoginController@loginPatient')->name('patient.auth.loginPatient');
+
+    Route::resource('appointment', 'Patient\AppointmentController');
 });
 
