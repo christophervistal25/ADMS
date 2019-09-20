@@ -17,13 +17,14 @@ class AccountsSeeder extends Seeder
         Patient::create([
             'name' => 'Christopher Vistal',
             'email' => 'christophervistal26@gmail.com',
-            'password' => bcrypt(1234),
+            'password' => 1234,
+            'mobile_no' => '09193693499'
         ]);
 
         Admin::create([
             'name' => 'Administrator Vistal',
             'email' => 'admin@yahoo.com',
-            'password' => bcrypt(1234),
+            'password' => 1234,
         ]);
     }
 }

@@ -29,7 +29,8 @@ class PatientLoginController extends Controller
           return redirect()->intended(route('patient.dashboard'));
       }
       // if unsuccessful, then redirect back to the login with the form data
-      return redirect()->back()->withInput($request->only('email', 'remember'));
+      return redirect()->back()->withInput($request->only('email', 'remember'))
+                              ->withErrors(['message' => 'Invalid Email or Password.']);
     }
 
     public function logout()
