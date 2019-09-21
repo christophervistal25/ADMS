@@ -13,19 +13,28 @@
             <div class="clearfix"></div>
           </div>
             <div class="x_content">
-                <form action="">
-                  <select name="doctor" id="doctor" class="form-control">
-                    @foreach($doctors as $doctor)
-                      <option value="{{ $doctor->id }}">{{ $doctor->title . $doctor->fullname }}</option>
-                    @endforeach
-                  </select>
-
-                  
-                </form>
             </div>
       </div>
     </div>
 </div>
 @push('page-scripts')
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<script>
+ $(document).ready(function() {
+  let dates = '[{"title": "event1", "start": "2019-09-20" , "end": "2019-09-22"}]';
+  dates = JSON.parse(dates);
+
+  let calendar = $('#calendar').fullCalendar({
+      editable : true,
+      header:{
+         left:'prev,next today',
+         center:'title',
+         right:'month,agendaWeek,agendaDay'
+      },
+      events : dates
+   });
+ }); -->
+</script>
 @endpush
 @endsection

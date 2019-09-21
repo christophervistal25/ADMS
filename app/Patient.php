@@ -46,5 +46,10 @@ class Patient extends Authenticatable
     {
         return $this->belongsToMany('App\Appointment', 'patient_appointment', 'patient_id', 'appointment_id')->withTimestamps();
     }
+
+    public function info()
+    {
+        return $this->hasOne('App\PatientInformation');
+    }
        
 }

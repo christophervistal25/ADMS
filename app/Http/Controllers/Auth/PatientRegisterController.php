@@ -32,6 +32,6 @@ class PatientRegisterController extends Controller
 
         $patient = $this->patient->create($request->all());
         Auth::guard('patient')->login($patient);
-        return redirect()->intended(route('patient.dashboard'));
+        return redirect()->intended(route('account.settings'));
     }
 }

@@ -10,6 +10,6 @@ class Appointment extends Model
 
     public function patients()
     {
-        return $this->belongsToMany('App\Patient', 'patient_appointment', 'appointment_id', 'patient_id')->withTimestamps();
+        return $this->belongsToMany('App\Patient', 'patient_appointment', 'appointment_id', 'patient_id')->withPivot('code')->withTimestamps();
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Patient;
 
-use Illuminate\Http\Request;
+use App\Doctor;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -28,7 +29,8 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return view('patient.appointment.create');
+        $doctors = Doctor::all();
+        return view('patient.appointment.create', compact('doctors'));
     }
 
     /**
