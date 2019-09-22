@@ -38,7 +38,7 @@ class PatientController extends Controller
             'mobile_no'      => 'required|unique:patients,mobile_no,'.$patient->id,
             'nickname'       => 'required',
             'birthdate'      => 'date',
-            'martial_status' => 'required',
+            'martial_status' => ['required',Rule::in(['Single', 'Married', 'Divorced', 'Widowed'])],
             'sex'            => ['required',Rule::in(['Women', 'Men', 'Choose not to say'])],
             'occupation'     => 'required',
             'home_address'   => 'required',

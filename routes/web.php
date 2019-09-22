@@ -7,6 +7,11 @@ Route::get('/', function () {
 
 Route::redirect('login', '/patient/login', 301);
 
+Route::get('/sample', function () {
+  $sample = ['id' => 1, 'title' => 'Sample One', 'start' => '2019-09-22 10:41:41', 'end' => '2019-09-22 11:43:41'];
+  return response()->json([$sample]);
+});
+
 
 Auth::routes();
 
@@ -20,6 +25,9 @@ Route::group(['prefix' => 'admin'] , function () {
   	Route::post('logout', 'Auth\AdminLoginController@logout')->name('admin.auth.logout');
 
     Route::resource('doctor', 'Admin\DoctorController');
+    Route::resource('service', 'Admin\ServiceController');
+
+    Route::resource('close', 'Admin\CloseDaysController');
 });
 
 
@@ -33,9 +41,12 @@ Route::group(['prefix' => 'patient'] , function () {
     Route::get('register', 'Auth\PatientRegisterController@register')->name('patient.auth.register');
     Route::post('register', 'Auth\PatientRegisterController@registerPatient')->name('patient.auth.registerPatient');
 
+    Route::get('/appointment/available/{date}/{doctorId}/{serviceDuration}', 'Patient\AppointmentController@getAvailables');
+    
     Route::resource('appointment', 'Patient\AppointmentController');
 
     Route::get('/edit', 'PatientController@edit')->name('account.settings');
     Route::put('/edit/{patient}', 'PatientController@update')->name('account.settings.update');
+
 });
 

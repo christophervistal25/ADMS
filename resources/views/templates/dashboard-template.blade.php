@@ -5,7 +5,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title text-center"><i class="fa fa-paw"></i> <span>ADMS</span></a>
+              <a  class="site_title text-center"><i class="fa fa-paw"></i> <span>ADMS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -33,8 +33,8 @@
                           <li><a><i class="fa fa-home"></i> Appointment <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                               <li><a href="{{ route('appointment.create') }}">Set Appointment</a></li>
-                              <li><a href="index.html">Upcoming Appointments</a></li>
-                              <li><a href="index2.html">Appointment History</a></li>
+                              <li><a href="#">Appointments</a></li>
+                              <li><a href="#">Appointment History</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -52,6 +52,8 @@
                       <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                       </div>
+
+
 
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
@@ -72,6 +74,27 @@
                           <form id="logout-form" action="{{ route('patient.auth.logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                           </form>
+                          </ul>
+                        </li>
+                         <li role="presentation" class="dropdown">
+                          <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="badge bg-green">{{ is_null(request()->user()->info) ? '1' : '' }}</span>
+                          </a>
+                          <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                            @if(is_null(request()->user()->info))
+                                <li>
+                                  <a href="{{ route('account.settings') }}">
+                                    <span class="image"><i class="fa fa-user"></i></span>
+                                    <span>
+                                      <span>Incomplete profile</span>
+                                    </span>
+                                    <span class="message">
+                                      Please complete your profile to easily set an appointment.
+                                    </span>
+                                  </a>
+                                </li>
+                            @endif
                           </ul>
                         </li>
                       </ul>
@@ -106,7 +129,7 @@
                             <ul class="nav child_menu">
                               <li><a href="index.html">Dashboard</a></li>
                               <li><a href="index2.html">Dashboard2</a></li>
-                              <li><a href="index3.html">Dashboard3</a></li>
+                              <li><a href="{{ route('close.index') }}">Close days</a></li>
                             </ul>
                           </li>
                         </ul>
@@ -118,6 +141,9 @@
                             </ul>
                           </li>
                         </ul>
+
+                        <ul class="nav side-menu"><li><a href="{{ route('service.index') }}"><i class="fa fa-home"></i> Services</a></li></ul>
+
                       </div>
 
                     </div>

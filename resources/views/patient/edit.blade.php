@@ -12,7 +12,7 @@
             <div class="x_content">
               @include('templates.error')
               <form action="{{ route('account.settings.update', [Auth::user()]) }}" method="POST">
-                <div class="alert alert-success alert-dismissible fade in" role="alert">
+                <div class="alert alert-{{ \Session::has('success') ? 'success' : 'info' }}" role="alert">
                   @if(\Session::has('success'))
                     {{ \Session::get('success') }}
                     @else
@@ -47,7 +47,9 @@
                   </div>
     
                  <hr>
-                 <h5><b>If you are planning to set an appointment you must fill these fields.</b></h5>
+                  <div class="alert alert-info" role="alert">
+                      If you are planning to set an appointment you must fill these fields.
+                  </div>
 
                   <div class="form-group">
                     <label for="nickname">Nickname</label>
@@ -60,8 +62,13 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="status">Martial Status</label>
-                    <input type="text" class="form-control" id="status" name="martial_status" value="{{ old('martial_status') ?? $patient->info->martial_status ?? '' }}">
+                    <label for="martial_status">Martial Status</label>
+                    <select class="form-control" id="martial_status" name="martial_status">
+                        <option value="Single" {{ old('martial_status') === 'Single' ? 'selected' : @$patient->info->martial_status === 'Single' ? 'selected' : '' }}>Single</option>
+                        <option value="Married" {{ old('martial_status') === 'Married' ? 'selected' : @$patient->info->martial_status === 'Married' ? 'selected' : '' }}>Married</option>
+                        <option value="Divorced" {{ old('martial_status') === 'Divorced' ? 'selected' : @$patient->info->martial_status === 'Divorced' ? 'selected' : '' }}>Divorced</option>
+                        <option value="Widowed" {{ old('martial_status') === 'Widowed' ? 'selected' : @$patient->info->martial_status === 'Widowed' ? 'selected' : '' }}>Widowed</option>
+                    </select>
                   </div>
 
                   <div class="form-group">

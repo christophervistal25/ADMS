@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Patient;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Doctor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
-class DoctorController extends Controller
+class AppointmentPrint extends Controller
 {
-    public function __construct(Doctor $doctor)
+
+    public function printConfirmation()
     {
-        $this->middleware('auth:admin');
-        $this->doctor = $doctor;
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
     }
     /**
      * Display a listing of the resource.
@@ -20,8 +22,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = $this->doctor->where('active', 'active')->get();
-        return view('admin.doctor.index', compact('doctors'));
+        //
     }
 
     /**
@@ -31,7 +32,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctor.create');
+        //
     }
 
     /**
@@ -42,18 +43,11 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'fullname' => 'required',
-            'title' => 'required',
-        ]);
-
-        $this->doctor->create($request->all());
-
-        return back()->with('success', 'Succesfully add Dr.' . $request->fullname);
+        //
     }
 
     /**
-     * Display doctors appointments
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -81,15 +75,9 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'fullname' => 'required',
-            'title'    => 'required',
-        ]);
-
-        $update = $doctor->update($request->all());
-        return response()->json(['success' => $update, 'doctor' => $doctor]);
+        //
     }
 
     /**
@@ -98,9 +86,8 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctor $doctor)
+    public function destroy($id)
     {
-        $delete = $doctor->update(['active' => 'in-active']);
-        return response()->json(['success' => $delete]);
+        //
     }
 }
