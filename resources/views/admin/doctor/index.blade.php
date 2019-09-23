@@ -30,7 +30,10 @@
               <td>{{ $doctor->id }}</td>
               <td>{{ $doctor->title }}</td>
               <td>{{ $doctor->fullname }}</td>
-              <td class="text-center"><button class="btn btn-success btn-sm edit-doctor" data-src="{{ $doctor }}"><i class="fa fa-edit"></i></button> <button data-src="{{ $doctor }}" class="btn btn-danger btn-sm delete-doctor"><i class="fa fa-trash"></i></button></td>
+              <td class="text-center">
+                <button class="btn btn-success btn-sm edit-doctor" data-src="{{ $doctor }}"><i class="fa fa-edit"></i></button>
+                <a href="{{ route('doctor.show', [$doctor]) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Appointments</a>
+                <button data-src="{{ $doctor }}" class="btn btn-danger btn-sm delete-doctor"><i class="fa fa-trash"></i></button></td>
             </tr>
             @endforeach
           </tbody>

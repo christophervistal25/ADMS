@@ -1,5 +1,6 @@
 <html>
 <head>
+  <title>Appointment Confirmation</title>
   <style>
     @page { margin: 100px 25px; }
     header { position: fixed; top: -100px; left: 0px; right: 0px; height: 50px; }
@@ -28,7 +29,7 @@
         <br>
         <span style='text-align:justify;'>
         <center>
-          This letter is to confirm your appointment with <b>{{$appointment->doctor->title}} {{ $appointment->doctor->fullname }}</b> on <b>{{ $appointment->start_date->format('l jS \\of F Y h:i:s A') . ' to ' . $appointment->end_date->format('h:i:s A') }}</b>.Your service is <b>{{ $appointment->service->name }}</b> costing you <b>PHP {{ $appointment->service->price }} {{$appointment->service->per_each === 1 ? 'Per each' : '' }}</b> if you need assistance in finding the location, then kindly contact [#]. 
+          This letter is to confirm your appointment with <b>{{$appointment->doctor->title}} {{ $appointment->doctor->fullname }}</b> on <b>{{ $appointment->start_date->format('l jS \\of F Y h:i:s A') . ' to ' . $appointment->end_date->format('h:i:s A') }}</b>.Your service is <b>{{ $appointment->service->name }}</b> costing you <b>PHP {{ $appointment->service->price }} {{$appointment->service->per_each === 1 ? 'Per each' : '' }}</b> if you need assistance in finding the location, then kindly contact <b>{{ $mobile_no }}</b>.
           I appreciate a response from your side confirming the same.
         </center>
         </span>

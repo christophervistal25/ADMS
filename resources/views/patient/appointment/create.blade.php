@@ -13,66 +13,71 @@
             <div class="clearfix"></div>
           </div>
             <div class="x_content">
-              <div class="alert alert-success" role="alert">
-                  Please select service & doctor first.
-              </div>
-               <form id="setAppointmentForm">
-                  <div class="form-group col-lg-6">
-                    <label for="services">Select service</label>
-                    <select name="service_id" id="services" class="form-control">
-                      <option selected disabled>Select service</option>
-                      @foreach($services as  $service)
-                        <option data-src="{{ $service }}" value="{{ $service->id }}">{{ $service->name }}</option>
-                      @endforeach
-                    </select>
-                </div>
-
-                <div class="form-group col-lg-3">
-                      <label for="price">Service fee</label>
-                      <input type="text" readonly id="price" name="price" class="form-control">
-                </div>
-
-                <div class="form-group col-lg-3">
-                      <label for="hour">Service Hour</label>
-                      <input type="text" readonly id="hour" name="duration" class="form-control">
-                </div>
-                
-
-                <div class="form-group col-lg-12">
-                      <label for="doctors">Select doctor</label>
-                      <select name="doctor" id="doctors" class="form-control">
-                        <option selected disabled>Select doctor</option>
-                        @foreach($doctors as $doctor)
-                          <option value="{{ $doctor->id }}">{{ $doctor->title . $doctor->fullname }}</option>
+              
+              @if(is_null(Auth::user()->info))
+                  <h3 class="text-center">Sorry but you can't set an appoint please complete your profile first. <a href="/patient/edit" class="btn btn-success btn-sm">Update profile</a></h3>
+                @else
+                  <div class="alert alert-success" role="alert">
+                    Please select service & doctor first.
+                  </div>
+                    <form id="setAppointmentForm">
+                    <div class="form-group col-lg-6">
+                      <label for="services">Select service</label>
+                      <select name="service_id" id="services" class="form-control">
+                        <option selected disabled>Select service</option>
+                        @foreach($services as  $service)
+                          <option data-src="{{ $service }}" value="{{ $service->id }}">{{ $service->name }}</option>
                         @endforeach
                       </select>
-                </div>
-                
-                <div class="form-group col-lg-12">
-                      <label for="date">Select Date (click the icon to select date)</label>
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" readonly />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-                <div id="recommendTime" class="hide">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <td class="text-center">Time</td>
-                        <td class="text-center">Session</td>
-                        <td class="text-center">Action</td>
-                      </tr>
-                    </thead>
-                    <tbody id="vacants">
-                       
-                    </tbody>
+                  </div>
 
-                  </table>
-                </div>
-               </form>
+                  <div class="form-group col-lg-3">
+                        <label for="price">Service fee</label>
+                        <input type="text" readonly id="price" name="price" class="form-control">
+                  </div>
+
+                  <div class="form-group col-lg-3">
+                        <label for="hour">Service Hour</label>
+                        <input type="text" readonly id="hour" name="duration" class="form-control">
+                  </div>
+                  
+
+                  <div class="form-group col-lg-12">
+                        <label for="doctors">Select doctor</label>
+                        <select name="doctor" id="doctors" class="form-control">
+                          <option selected disabled>Select doctor</option>
+                          @foreach($doctors as $doctor)
+                            <option value="{{ $doctor->id }}">{{ $doctor->title . ' ' .$doctor->fullname }}</option>
+                          @endforeach
+                        </select>
+                  </div>
+                  
+                  <div class="form-group col-lg-12">
+                        <label for="date">Select Date (click the icon to select date)</label>
+                      <div class='input-group date' id='datetimepicker1'>
+                          <input type='text' class="form-control" readonly />
+                          <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+                          </span>
+                      </div>
+                  </div>
+                  <div id="recommendTime" class="hide">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <td class="text-center">Time</td>
+                          <td class="text-center">Session</td>
+                          <td class="text-center">Action</td>
+                        </tr>
+                      </thead>
+                      <tbody id="vacants">
+                         
+                      </tbody>
+
+                    </table>
+                  </div>
+                 </form>
+              @endif
             </div>
       </div>
     </div>

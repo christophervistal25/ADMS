@@ -9,14 +9,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Authenticatable
 {
-     use Notifiable;
+    use Notifiable;
+    public const MOBILE_NO = '09193693499';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password'
     ];
     /**
      * The attributes that should be hidden for arrays.

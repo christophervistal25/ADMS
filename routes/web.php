@@ -26,6 +26,7 @@ Route::group(['prefix' => 'admin'] , function () {
 
     Route::resource('doctor', 'Admin\DoctorController');
     Route::resource('service', 'Admin\ServiceController');
+    Route::resource('doctorappointment', 'Admin\DoctorAppointmentController');
 
     Route::resource('close', 'Admin\CloseDaysController');
 });

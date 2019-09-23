@@ -55,7 +55,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $doctors = Doctor::all();
+        $doctors = Doctor::where('active', '!=' ,'in-active')->get();
         $services = Service::all();
         return view('patient.appointment.create', compact('doctors', 'services'));
     }
@@ -103,11 +103,7 @@ class AppointmentController extends Controller
      */
     public function show(int $id)
     {
-        $appointment = Patient::with(['appointments' => function($query) use ($id) {
-            $query->where('id', $id);
-        }])->find(Auth::user()->id);
-
-        return view('patient.appointment.overview', compact('appointment'));
+ 
     }
 
     /**

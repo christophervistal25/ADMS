@@ -58,8 +58,9 @@ class Patient extends Authenticatable
          return Patient::with(['appointments' => function ($query) {
             $query->whereDay('start_date' , '>=', date('d'))
                   ->whereYear('start_date' , date('Y'))
-                  ->whereMonth('start_date', '>=', date('m'))
-                  ->whereTime('start_date', '>=', date('H:i:s'));
+                  ->whereMonth('start_date', '>=', date('m'));
+                  // ->whereTime('start_date', '<=', date('H:i:s'))
+                  // ->whereTime('end_date', '>=', date('H:i:s'));
         }, 'appointments.service', 'appointments.doctor'])->find($patientId);
     }
 }

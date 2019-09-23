@@ -33,8 +33,7 @@
                           <li><a><i class="fa fa-home"></i> Appointment <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                               <li><a href="{{ route('appointment.create') }}">Set Appointment</a></li>
-                              <li><a href="{{ route('appointment.index') }}">Appointments <span class="badge"></span></a></li>
-                              <li><a href="#">Appointment History</a></li>
+                              <li><a href="{{ route('appointment.index') }}">Appointments <span class="badge">{{ App\Patient::getAppointments(Auth::user()->id)->appointments->count() }} </span></a></li>
                             </ul>
                           </li>
                         </ul>

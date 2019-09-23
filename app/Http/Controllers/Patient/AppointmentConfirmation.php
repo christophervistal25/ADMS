@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Patient;
 
+use App\Admin;
 use App\Appointment;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 
 
 class AppointmentConfirmation extends Controller
@@ -17,7 +18,8 @@ class AppointmentConfirmation extends Controller
 	
     public function print(Appointment $appointment)
     {
-      	$pdf = PDF::loadView('patient.appointment.print_forms.confirmation', compact('appointment'));
+    	$mobile_no = Admin::MOBILE_NO;
+      	$pdf = PDF::loadView('patient.appointment.print_forms.confirmation', compact('appointment', 'mobile_no'));
 		return $pdf->stream('invoice.pdf');
     }
 }

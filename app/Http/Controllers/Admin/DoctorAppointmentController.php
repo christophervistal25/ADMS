@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Doctor;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\DoctorAppointmentResource;
+use Illuminate\Http\Request;
 
-class DoctorController extends Controller
+class DoctorAppointmentController extends Controller
 {
-    public function __construct(Doctor $doctor)
+    public function __construct()
     {
         $this->middleware('auth:admin');
-        $this->doctor = $doctor;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +21,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = $this->doctor->where('active', 'active')->get();
-        return view('admin.doctor.index', compact('doctors'));
+        //
     }
 
     /**
@@ -31,7 +31,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctor.create');
+        //
     }
 
     /**
@@ -42,25 +42,20 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'fullname' => 'required',
-            'title' => 'required',
-        ]);
-
-        $this->doctor->create($request->all());
-
-        return back()->with('success', 'Succesfully add Dr.' . $request->fullname);
+        //
     }
 
     /**
-     * Display doctors appointments
+     * Display the appointments of doctor today.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Doctor $doctor)
+    public function show(int $id)
     {
-        return view('admin.doctor.appointments', compact('doctor'));
+        $doctor = Doctor::with(['appointments'])->find($id);
+        $appointments = DoctorAppointmentResource::collection($doctor->appointments);
+        return response()->json($appointments);
     }
 
     /**
@@ -81,15 +76,9 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'fullname' => 'required',
-            'title'    => 'required',
-        ]);
-
-        $update = $doctor->update($request->all());
-        return response()->json(['success' => $update, 'doctor' => $doctor]);
+        //
     }
 
     /**
@@ -98,9 +87,8 @@ class DoctorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctor $doctor)
+    public function destroy($id)
     {
-        $delete = $doctor->update(['active' => 'in-active']);
-        return response()->json(['success' => $delete]);
+        //
     }
 }
