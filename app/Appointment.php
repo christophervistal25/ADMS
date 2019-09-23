@@ -8,6 +8,7 @@ class Appointment extends Model
 {
     protected $fillable = ['service_id', 'doctor_id', 'start_date', 'end_date'];
     public $timestamps  = false;
+    protected $dates    = ['start_date', 'end_date'];
 
 
     public function patients()

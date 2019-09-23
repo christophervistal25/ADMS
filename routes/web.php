@@ -43,6 +43,8 @@ Route::group(['prefix' => 'patient'] , function () {
 
     Route::get('/appointment/available/{date}/{doctorId}/{serviceDuration}', 'Patient\AppointmentController@getAvailables');
     
+    Route::get('/appointment/confirmation/{appointment}', 'Patient\AppointmentConfirmation@print');
+    
     Route::resource('appointment', 'Patient\AppointmentController');
 
     Route::get('/edit', 'PatientController@edit')->name('account.settings');

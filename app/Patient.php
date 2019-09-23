@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Patient;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Patient extends Authenticatable 
 {
@@ -51,5 +52,14 @@ class Patient extends Authenticatable
     {
         return $this->hasOne('App\PatientInformation');
     }
-       
+
+    public static function getAppointments(int $patientId)
+    {
+         return Patient::with(['appointments' => function ($query) {
+            $query->whereDay('start_date' , '>=', date('d'))
+                  ->whereYear('start_date' , date('Y'))
+                  ->whereMonth('start_date', '>=', date('m'))
+                  ->whereTime('start_date', '>=', date('H:i:s'));
+        }, 'appointments.service', 'appointments.doctor'])->find($patientId);
+    }
 }

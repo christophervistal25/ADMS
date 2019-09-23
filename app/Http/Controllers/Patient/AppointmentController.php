@@ -44,7 +44,8 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        $patient = Patient::getAppointments(Auth::user()->id);
+        return view('patient.appointment.index', compact('patient'));
     }
 
     /**

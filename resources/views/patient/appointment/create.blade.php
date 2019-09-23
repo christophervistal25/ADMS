@@ -116,7 +116,7 @@
             data : `${data}&start_date=${selectedStart}&end_date=${selectedEnd}`,
             success: function (response) {
               alert('Redirecting to appointment confirmation please wait a couple of seconds..');
-              window.location.href = `/patient/appointment/${response.appointment_id}`;
+              window.location.href = `/patient/appointment/confirmation/${response.appointment_id}`;
             }
           });
         }
@@ -133,7 +133,7 @@
                     <tr>
                       <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
                       <td class="text-center"><b>${property.toUpperCase()}</b></td>
-                      <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Proceed</button></td>
+                      <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
                     </tr>
                 `);
             });
