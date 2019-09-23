@@ -5,7 +5,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a  class="site_title text-center"><i class="fa fa-paw"></i> <span>ADMS</span></a>
+              <a  class="site_title text-center"><i class="fas fa-tooth"></i> <span>ADMS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -30,7 +30,7 @@
                       <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                          <li><a><i class="fa fa-home"></i> Appointment <span class="fa fa-chevron-down"></span></a>
+                          <li><a><i class="fas fa-home"></i> Appointment <span class="fas fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                               <li><a href="{{ route('appointment.create') }}">Set Appointment</a></li>
                               <li><a href="{{ route('appointment.index') }}">Appointments <span class="badge">{{ App\Patient::getAppointments(Auth::user()->id)->appointments->count() }} </span></a></li>
@@ -49,7 +49,7 @@
                   <div class="nav_menu">
                     <nav>
                       <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        <a id="menu_toggle"><i class="fas fa-bars"></i></a>
                       </div>
 
 
@@ -58,7 +58,7 @@
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                             <img src="images/img.jpg" alt="">{{ Auth::user()->name }}
-                            <span class=" fa fa-angle-down"></span>
+                            <span class=" fas fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
                             <li>
@@ -124,24 +124,31 @@
                       <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                          <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                          <li><a><i class="fas fa-home"></i> Home <span class="pull-right fas fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                              <li><a href="index.html">Dashboard</a></li>
-                              <li><a href="index2.html">Dashboard2</a></li>
+                              <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                               <li><a href="{{ route('close.index') }}">Close days</a></li>
                             </ul>
                           </li>
                         </ul>
                          <ul class="nav side-menu">
-                          <li><a><i class="fa fa-home"></i> Doctors <span class="fa fa-chevron-down"></span></a>
+                          <li><a><i class="fas fa-stethoscope"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                               <li><a href="{{ route('doctor.index') }}">List of doctors</a></li>
-                              <li><a href="{{ route('doctor.create') }}">Add new doctor</a></li>
                             </ul>
                           </li>
                         </ul>
 
-                        <ul class="nav side-menu"><li><a href="{{ route('service.index') }}"><i class="fa fa-home"></i> Services</a></li></ul>
+                        <ul class="nav side-menu">
+                          <li><a><i class="fas fa-users"></i> Patients <span class="pull-right fas fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                              {{-- <li><a href="{{ route('doctor.index') }}">List of doctors</a></li> --}}
+                              {{-- <li><a href="{{ route('doctor.create') }}">Add new doctor</a></li> --}}
+                            </ul>
+                          </li>
+                        </ul>
+
+                        <ul class="nav side-menu"><li><a href="{{ route('service.index') }}"><i class="fas fa-sort-alpha-up"></i> Services</a></li></ul>
 
                       </div>
 

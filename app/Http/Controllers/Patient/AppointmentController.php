@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Appointment;
+use App\CloseDay;
 use App\Doctor;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\AppointmentRepository;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
@@ -27,14 +29,17 @@ class AppointmentController extends Controller
         list($month, $day , $year) = explode('-', $date); 
 
         $dates = DB::table('appointments')
-                ->where('doctor_id', $doctorId)
-                ->whereMonth('start_date', $month)
-                ->whereDay('start_date', $day)
-                ->whereYear('start_date', $year)
-                ->orderBy('start_date', 'ASC')
-                ->get(['start_date', 'end_date']);
+                    ->where('doctor_id', $doctorId)
+                    ->whereMonth('start_date', $month)
+                    ->whereDay('start_date', $day)
+                    ->whereYear('start_date', $year)
+                    ->orderBy('start_date', 'ASC')
+                    ->get(['start_date', 'end_date']);
 
-        return $this->appointmentRepo->findAvailableFor($dates, $duration);
+        $closeByTime = CloseDay::byTime($month, $day);
+        $availables = $this->appointmentRepo->findAvailableFor($dates, $duration);
+
+        return response()->json(['availables' => $availables, 'time_close' => $closeByTime]);
     }
     
     /**
@@ -55,9 +60,10 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $doctors = Doctor::where('active', '!=' ,'in-active')->get();
+        $closeDays = CloseDay::allDay();
+        $doctors = Doctor::active()->get();
         $services = Service::all();
-        return view('patient.appointment.create', compact('doctors', 'services'));
+        return view('patient.appointment.create', compact('doctors', 'services', 'closeDays'));
     }
 
     /**

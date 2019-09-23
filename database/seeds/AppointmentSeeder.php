@@ -14,7 +14,6 @@ class AppointmentSeeder extends Seeder
     public function run()
     {
     	$date = date('Y-m-d');
-    	$start_time = ['08', '09', '10' , '11' , '12'];
 
     		Appointment::create([
 	        	'service_id' => 1,

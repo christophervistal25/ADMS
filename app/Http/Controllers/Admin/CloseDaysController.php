@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ClinicClose;
+use App\CloseDay;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CloseDaysController extends Controller
@@ -19,7 +20,7 @@ class CloseDaysController extends Controller
      */
     public function index()
     {
-        $dates = ClinicClose::all();
+        $dates = CloseDay::all();
         return view('admin.close.index', compact('dates'));
     }
 
@@ -41,7 +42,18 @@ class CloseDaysController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+        
+        $this->validate($request, [
+            'start' => 'date',
+            'end'   => 'date',
+        ]);
+
+        CloseDay::create([
+            'start' => Carbon::parse($request->start),
+            'end'   => Carbon::parse($request->end),
+        ]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -73,9 +85,19 @@ class CloseDaysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, CloseDay $close)
     {
-        //
+        $this->validate($request, [
+            'start' => 'date',
+            'end'   => 'date',
+        ]);
+
+        $updated = $close->update([
+            'start' => Carbon::parse($request->start),
+            'end'   => Carbon::parse($request->end),
+        ]);
+        
+        return response()->json(['success' => $updated]);
     }
 
     /**
@@ -84,8 +106,8 @@ class CloseDaysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CloseDay $close)
     {
-        //
+        return response()->json(['success' => $close->delete()]);
     }
 }

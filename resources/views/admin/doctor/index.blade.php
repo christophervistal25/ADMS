@@ -15,11 +15,11 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
+        <button class="btn btn-primary btn-sm pull-right" data-target=".bs-doctor-add-modal" data-toggle="modal"><i class="fas fa-plus"></i> Add Doctor</button>
         <table class="table table-striped table-bordered" id="datatable">
           <thead>
             <tr>
               <th>ID</th>
-              <th>Title</th>
               <th>Name</th>
               <th>Actions</th>
             </tr>
@@ -28,12 +28,12 @@
             @foreach($doctors as $doctor)
             <tr id="doctor-data-{{$doctor->id}}">
               <td>{{ $doctor->id }}</td>
-              <td>{{ $doctor->title }}</td>
-              <td>{{ $doctor->fullname }}</td>
+              <td class="text-center"><b>{{ $doctor->title . ' ' .  $doctor->fullname }}</b></td>
               <td class="text-center">
                 <button class="btn btn-success btn-sm edit-doctor" data-src="{{ $doctor }}"><i class="fa fa-edit"></i></button>
+                <button data-src="{{ $doctor }}" class="btn btn-danger btn-sm delete-doctor"><i class="fa fa-trash"></i></button>
                 <a href="{{ route('doctor.show', [$doctor]) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Appointments</a>
-                <button data-src="{{ $doctor }}" class="btn btn-danger btn-sm delete-doctor"><i class="fa fa-trash"></i></button></td>
+                </td>
             </tr>
             @endforeach
           </tbody>
@@ -42,15 +42,45 @@
     </div>
   </div>
 </div>
-<!-- Small modal -->
 
+<!-- Add modal -->
+<div class="modal fade bs-doctor-add-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="addDoctor">Add Doctor</h4>
+      </div>
+      <form id="addDoctorForm">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="addDoctorFullname">Fullname</label>
+                <input type="text" id="addDoctorFullname" class="form-control" name="fullname">
+            </div>
+            <div class="form-group">
+                <label for="addDoctortitle">Title</label>
+                <input type="text" id="addDoctortitle" class="form-control" name="title">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /modals -->
+
+<!-- Edit modal -->
 <div class="modal fade bs-doctor-edit-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel2">Edit Doctor</h4>
+        <h4 class="modal-title" id="editDoctor">Edit Doctor</h4>
       </div>
       <form id="editDoctorForm">
         <div class="modal-body">
@@ -86,6 +116,21 @@
       }
   });
   
+  $('#addDoctorForm').submit(function (e) {
+      e.preventDefault();
+      let data = $(this).serialize();
+      $.ajax({
+        url : '/admin/doctor',
+        type : 'POST',
+        data : data,
+        success : function (response) {
+            if (response.success) {
+                alert('Succesfully add new doctor please wait a couple of seconds...');
+                window.location.reload();
+            }
+        }
+      })
+  });
 
   $('.edit-doctor').click(function () {
       let doctor = JSON.parse($(this).attr('data-src'));

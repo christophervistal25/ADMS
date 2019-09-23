@@ -12,4 +12,9 @@ class Doctor extends Model
     {
         return $this->hasMany('App\Appointment');
     }
+
+    public static function scopeActive($query)
+    {
+    	return $query->where('active', '!=', 'in-active');
+    }
 }

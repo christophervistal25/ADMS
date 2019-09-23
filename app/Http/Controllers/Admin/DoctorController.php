@@ -31,7 +31,7 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('admin.doctor.create');
+        
     }
 
     /**
@@ -49,7 +49,7 @@ class DoctorController extends Controller
 
         $this->doctor->create($request->all());
 
-        return back()->with('success', 'Succesfully add Dr.' . $request->fullname);
+        return response()->json(['success' => true]);
     }
 
     /**

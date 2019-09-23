@@ -69,7 +69,7 @@
             </div>
 
             <div class="form-group">
-                <label for="duration">Duration</label>
+                <label for="duration">Service Hour/s</label>
                 <select name="duration" id="duration" class="form-control">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -120,7 +120,7 @@
             </div>
 
             <div class="form-group">
-                <label for="editDuration">Duration</label>
+                <label for="editDuration">Service Hour/s</label>
                 <select name="duration" id="editDuration" class="form-control">
                   <option value="1">1</option>
                   <option value="2">2</option>

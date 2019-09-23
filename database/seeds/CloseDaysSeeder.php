@@ -1,6 +1,7 @@
 <?php
 
 use App\ClinicClose;
+use App\CloseDay;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -13,9 +14,16 @@ class CloseDaysSeeder extends Seeder
      */
     public function run()
     {
-        ClinicClose::create([
-			'start' => Carbon::parse('2019-09-22 20:56:00')
-			'end'   => Carbon::parse('2019-09-22 20:56:00')
+        CloseDay::create([
+            'start' => Carbon::parse(date('Y-m-d', strtotime('+2 day')) . ' 08:00:00 AM'),
+            'end'   => Carbon::parse(date('Y-m-d', strtotime('+2 day')) . ' 10:00:00 AM'),
+            'all_day' => 1,
+        ]);
+
+        CloseDay::create([
+            'start' => Carbon::parse(date('Y-m-d') . ' 08:00:00 AM'),
+            'end'   => Carbon::parse(date('Y-m-d') . ' 10:00:00 AM'),
+            'all_day' => 0,
         ]);
     }
 }

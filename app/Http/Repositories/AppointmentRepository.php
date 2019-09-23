@@ -3,13 +3,11 @@ namespace App\Http\Repositories;
 
 use App\Appointment;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use DB;
 
 class AppointmentRepository
 {
-	// TODO FIND THE VACANT TIME
-
 	protected $appointment;
     public const MAX_HOURS_OF_APPOINTMENT_IN_MORNING   = 4;
     public const MAX_HOURS_OF_APPOINTMENT_IN_AFTERNOON = 4;
@@ -37,7 +35,7 @@ class AppointmentRepository
 
 	private function getGreetingResult(array $results, string $greeting, int $duration)
 	{
-		$hours = ($greeting == 'morning') ? self::MAX_HOURS_OF_APPOINTMENT_IN_MORNING : self::MAX_HOURS_OF_APPOINTMENT_IN_MORNING;
+		$hours = ($greeting == 'morning') ? self::MAX_HOURS_OF_APPOINTMENT_IN_MORNING : self::MAX_HOURS_OF_APPOINTMENT_IN_AFTERNOON;
 		return (array_sum($results[$greeting]['result']) + $duration) > $hours ? false : true;
 	}
 
