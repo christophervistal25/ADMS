@@ -132,18 +132,18 @@
                           </li>
                         </ul>
                          <ul class="nav side-menu">
-                          <li><a><i class="fas fa-stethoscope"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                              <li><a href="{{ route('doctor.index') }}">List of doctors</a></li>
-                            </ul>
-                          </li>
-                        </ul>
+                            <li><a><i class="fas fa-stethoscope"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
+                              <ul class="nav child_menu">
+                                <li><a href="{{ route('doctor.index') }}">List of doctors</a></li>
+                              </ul>
+                            </li>
+                          </ul>
 
                         <ul class="nav side-menu">
                           <li><a><i class="fas fa-users"></i> Patients <span class="pull-right fas fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                              {{-- <li><a href="{{ route('doctor.index') }}">List of doctors</a></li> --}}
-                              {{-- <li><a href="{{ route('doctor.create') }}">Add new doctor</a></li> --}}
+                              <li><a href="{{ route('patient.index') }}">List of patients</a></li>
+                              <li><a href="{{ route('patient.create') }}">Add new patient</a></li>
                             </ul>
                           </li>
                         </ul>

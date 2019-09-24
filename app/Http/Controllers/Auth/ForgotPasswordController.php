@@ -45,7 +45,7 @@ class ForgotPasswordController extends Controller
     public function showLinkRequestForm()
     {
         return view('auth.passwords.email',[
-            'title' => 'Patient Password Reset',
+            'title' => 'Password Reset',
         ]);
     }
 }
