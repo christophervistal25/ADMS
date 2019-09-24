@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Doctor;
+use App\Http\Controllers\Controller;
+use App\Patient;
+use App\Service;
+use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
@@ -60,7 +62,8 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        return view('admin.doctor.appointments', compact('doctor'));
+        $services = Service::all();
+        return view('admin.doctor.appointments', compact('doctor', 'services'));
     }
 
     /**

@@ -49,6 +49,7 @@ class PatientController extends Controller
          try {
             $patient = Patient::create($request->all());
             $information = new PatientInformation();
+
             $information->nickname       = $request->nickname;
             $information->birthdate      = $request->birthdate;
             $information->martial_status = $request->martial_status;
@@ -59,11 +60,19 @@ class PatientController extends Controller
             $patient->email              = $request->email;
             $patient->mobile_no          = $request->mobile_no;
             $patient->info()->save($information);
-            return back()->with('status', 'Succesfully add new patient');
+            DB::commit();
+            return back()->with('success', 'Succesfully add new patient');
          } catch (Exception $e) {
             DB::rollback();
          }
      
+    }
+
+    public function searchPatient(string $name)
+    {
+        return Patient::where('name', $name)
+                ->orWhere('name', 'like', '%' . $name . '%')
+                ->get();
     }
 
     /**

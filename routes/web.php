@@ -7,11 +7,6 @@ Route::get('/', function () {
 
 Route::redirect('login', '/patient/login', 301);
 
-Route::get('/sample', function () {
-  $sample = ['id' => 1, 'title' => 'Sample One', 'start' => '2019-09-22 10:41:41', 'end' => '2019-09-22 11:43:41'];
-  return response()->json([$sample]);
-});
-
 
 Auth::routes();
 
@@ -27,7 +22,8 @@ Route::group(['prefix' => 'admin'] , function () {
     Route::resource('doctor', 'Admin\DoctorController');
     Route::resource('service', 'Admin\ServiceController');
     Route::resource('doctorappointment', 'Admin\DoctorAppointmentController');
-
+    
+    Route::get('/patient/search/{name}', 'Admin\PatientController@searchPatient');
     Route::resource('patient', 'Admin\PatientController');
 
     Route::resource('close', 'Admin\CloseDaysController');

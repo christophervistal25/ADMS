@@ -132,12 +132,13 @@
                           </li>
                         </ul>
                          <ul class="nav side-menu">
-                            <li><a><i class="fas fa-stethoscope"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
+                            <li><a><i class="fas fa-fa-calendar"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
                               <ul class="nav child_menu">
-                                <li><a href="{{ route('doctor.index') }}">List of doctors</a></li>
+                                <li><a href="{{ route('doctor.index') }}">List of doctors & appointments</a></li>
                               </ul>
                             </li>
                           </ul>
+
 
                         <ul class="nav side-menu">
                           <li><a><i class="fas fa-users"></i> Patients <span class="pull-right fas fa-chevron-down"></span></a>

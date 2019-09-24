@@ -7,12 +7,17 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-              @include('templates.success')
-              @include('templates.error')
+            @if(\Session::has('success'))
+              <div class="alert alert-success" role="alert">
+                  {{ \Session::get('success') }}
+                  <span style="color:white;">do you want to add <b>Examination Record Chart</b> for this patient? <a href="{{ route('patient.index') }}" style=" color :white;text-decoration: underline;">(click this underlined text)</a></span>
+              </div>
+              @else
+                @include('templates.error')
+              @endif
             <div class="clearfix"></div>
           </div>
             <div class="x_content">
-            
               <form action="{{ route('patient.store') }}" method="POST">
                   @csrf
                   <div class="form-group">

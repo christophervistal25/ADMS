@@ -36,7 +36,7 @@
                     <td class="text-center">{{ $patient->mobile_no }}</td>
                     <td class="text-center">{{ $patient->created_at->format('l jS \\of F Y') }}</td>
                     <td class="text-center">
-                      <button class="btn btn-sm btn-success btn-edit-info" data-src="{{ $patient }}">Edit</button>
+                      <button class="btn btn-sm btn-success btn-edit-info" data-src="{{ $patient }}">INFO</button>
                     </td>
                 </tr>
               @endforeach
