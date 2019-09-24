@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\CloseDay;
 use App\Http\Controllers\Controller;
+use App\Http\Repositories\CloseDayRepositories;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CloseDaysController extends Controller
 {
-    public function __construct()
+    public function __construct(CloseDayRepositories $closeDayRepo)
     {
         $this->middleware('auth:admin');
+        $this->closeDayRepo = $closeDayRepo;
     }
     /**
      * Display a listing of the resource.
@@ -42,16 +44,20 @@ class CloseDaysController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        
+
         $this->validate($request, [
             'start' => 'date',
             'end'   => 'date',
         ]);
 
+        $start   = Carbon::parse($request->start);
+        $end     = Carbon::parse($request->end);
+        $all_day = $this->closeDayRepo->isAllDay($start, $end);
+        
         CloseDay::create([
-            'start' => Carbon::parse($request->start),
-            'end'   => Carbon::parse($request->end),
+            'start'   => $start,
+            'end'     => $end,
+            'all_day' => $all_day,
         ]);
         return response()->json(['success' => true]);
     }
@@ -92,10 +98,16 @@ class CloseDaysController extends Controller
             'end'   => 'date',
         ]);
 
+        $start = Carbon::parse($request->start);
+        $end = Carbon::parse($request->end);
+        $all_day = $this->closeDayRepo->isAllDay($start, $end);
+
         $updated = $close->update([
-            'start' => Carbon::parse($request->start),
-            'end'   => Carbon::parse($request->end),
+            'start'   => $start,
+            'end'     => $end,
+            'all_day' => $all_day
         ]);
+
         
         return response()->json(['success' => $updated]);
     }

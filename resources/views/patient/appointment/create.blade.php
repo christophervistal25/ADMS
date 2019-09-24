@@ -147,14 +147,14 @@
               let format = 'hh:mm';
                 if (hasTimeClose) {
                     response.time_close.forEach((time) => {
-                      let betweenClosingTime = !moment(
+                      let betweenCloseTime = !moment(
                               new Date(start), format).isBetween(moment(new Date(time.start), format),
                               moment(new Date(time.end), format),
                               null,
                               '[)'
                         );
 
-                      if (betweenClosingTime) {
+                      if (betweenCloseTime) {
                           $('#vacants').append(`
                             <tr>
                               <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>

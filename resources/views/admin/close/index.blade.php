@@ -31,9 +31,9 @@
           <tbody>
             @foreach($dates as $date)
               <tr>
-                <td class="text-center"><b>{{ $date->start->format('l jS \\of F h:i A') }} to {{ $date->end->format('l jS \\of F Y h:i A - Y') }}</b></td>
-                <td class="text-center">{{ $date->created_at->diffForHumans() }}</td>
+                <td class="text-center"><b>{{ $date->start->format('l jS \\of F h:i A') }} to {{ $date->end->format('h:i A - Y') }}</b></td>
                 <td class="text-center">{{ ($date->all_day === 1) ? 'Close All Day' : '' }}</td>
+                <td class="text-center">{{ $date->created_at->diffForHumans() }}</td>
                 <td class="text-center">
                   <button data-src="{{ $date }}" class="btn btn-info btn-success btn-edit-close-day"><i class="fas fa-edit"></i></button>
                   <button  data-src="{{ $date->id }}" class="btn btn-info btn-danger btn-delete-close-day"><i class="fas fa-trash"></i></button>
@@ -81,14 +81,6 @@
                       </div>
                 </div>
 
-                <div class="pull-right">
-                  <div class="form-group">
-                    <label for="addAllDayClose"> 
-                      <input type="checkbox" name="all_day" id="addAllDayClose">
-                        <span>Close all day</span>
-                    </label>
-                  </div>
-                </div>
                 <div class="clearfix"></div>
         </div>
         <div class="modal-footer">
@@ -166,36 +158,6 @@
        $('#editDatetimepicker1, #editDatetimepicker2').datetimepicker({todayHighlight: true});
 
 
-       $('#addAllDayClose').click(function (e){
-          let start = $('#datetimepicker1');
-          let end = $('#datetimepicker2');
-        
-          let startDate = start.data('DateTimePicker');
-          let endDate   = end.data('DateTimePicker');
-          let startValue = start.find('input').val();
-          let endValue = end.find('input').val();
-
-          if (startTemp == null) {
-              startTemp = startValue;
-          }
-
-          if (endTemp == null) {
-              endTemp = endValue;
-          }
-          
-          if ($(this).prop('checked')) {
-            startDate.format = 'MM/DD/YYYY';
-            endDate.format   = 'MM/DD/YYYY';
-            startDate.setDate(new Date());
-            endDate.setDate(new Date());
-          } else {
-            startDate.format = 'MM/DD/YYYY h:mm A';
-            endDate.format   = 'MM/DD/YYYY h:mm A';
-            startDate.setDate(startTemp);
-            endDate.setDate(endTemp);
-          }
-       });
-
        $('#addCloseDayForm').submit(function (e) {
           e.preventDefault();
           let data = $(this).serialize();
@@ -215,8 +177,8 @@
        $('.btn-edit-close-day').click(function (e) {
           let data = JSON.parse($(this).attr('data-src'));
           closeDayId = data.id;
-          $('#editDatetimepicker1').find('input').val(moment(data.start).format('MM/DD/YYYY HH:mm A'))
-          $('#editDatetimepicker2').find('input').val(moment(data.end).format('MM/DD/YYYY HH:mm A'))
+          $('#editDatetimepicker1').find('input').val(moment(data.start).format('MM/DD/YYYY hh:mm A'))
+          $('#editDatetimepicker2').find('input').val(moment(data.end).format('MM/DD/YYYY hh:mm A'))
           $('.bs-edit-close-day-modal').modal('toggle');
        });
 
