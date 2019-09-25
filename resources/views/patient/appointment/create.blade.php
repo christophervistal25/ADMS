@@ -148,14 +148,14 @@
               let format = 'hh:mm';
                 if (hasTimeClose) {
                     response.time_close.forEach((time) => {
-                      let betweenCloseTime = !moment(
+                      let betweenCloseTime = moment(
                               new Date(start), format).isBetween(moment(new Date(time.start), format),
                               moment(new Date(time.end), format),
                               null,
                               '[)'
                         );
 
-                      if (betweenCloseTime) {
+                      if (!betweenCloseTime) {
                         vacants += `  <tr>
                               <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
                               <td class="text-center"><b>${property.toUpperCase()}</b></td>
@@ -165,15 +165,14 @@
                       }
                     });
                 } else {
-                   vacants += `  <tr>
-                              <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
-                              <td class="text-center"><b>${property.toUpperCase()}</b></td>
-                              <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
-                            </tr>`;
+                       vacants += `  <tr>
+                          <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
+                          <td class="text-center"><b>${property.toUpperCase()}</b></td>
+                          <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
+                        </tr>`;        
                 }
-
-                $('#vacants').append(vacants);
             });
+            $('#vacants').append(vacants);
         }
         $('#recommendTime').removeClass('hide');
     };
