@@ -106,7 +106,12 @@ class DoctorAppointmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $appointment             = Appointment::find($id);
+        $appointment->service_id = $request->service;
+        $appointment->start_date = $request->start_date;
+        $appointment->end_date   = $request->end_date;
+        $status                  = $appointment->save();
+        return response()->json(['success' => $status]);
     }
 
     /**

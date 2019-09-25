@@ -64,7 +64,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
         </button>
-        <h4 class="modal-title" id="addAppointment">Add Appointment for {{ $doctor->title . ' ' . $doctor->fullname }}</h4>
+        <h4 class="modal-title" id="addAppointment">Appointment details for {{ $doctor->title . ' ' . $doctor->fullname }}</h4>
       </div>
       <form id="addAppointmentForm">
         <div class="modal-body">
@@ -157,6 +157,101 @@
 </div>
 <!-- /Add Appointment -->
 
+<!-- Edit Appointment -->
+<div class="modal fade bs-appointment-edit-modal" tabindex="-1"  role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="addAppointment">Appointment details for {{ $doctor->title . ' ' . $doctor->fullname }}</h4>
+      </div>
+      <form id="editAppointmentForm">
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-6">
+                     <input type="hidden" id="appointmentId">
+                     <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="text" id="editName"  readonly class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="email">Email</label>
+                      <input type="email"  id="editEmail" readonly class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="mobile_no">Mobile no.</label>
+                      <input type="text" id="editMobile_no"  readonly class="form-control">
+                    </div>
+              </div>
+
+              <div class="col-lg-6">
+                     <div class="form-group">
+                        <label for="doctor">Doctor</label>
+                        <input type="text" id="editDoctor" readonly class="form-control" value="{{ $doctor->fullname }}">
+                    </div>
+              </div>
+                
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="service">Service</label>
+                    <select name="service" id="editService" class="form-control">
+                        <option selected disabled>Select service</option>
+                        @foreach($services as $service)
+                            <option data-src="{{$service}}" value="{{$service->id}}">{{$service->name}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="serviceFee">Service Fee</label>
+                    <input type="text" id="editServiceFee" readonly class="form-control">
+                  </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="serviceHour">Service Hour</label>
+                    <input type="text" id="editServiceHour" readonly class="form-control">
+                  </div>
+              </div>
+
+            </div>
+            <hr>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="startTime">Start time</label>
+                    <input type="text" name="start_date" id="editStartTime"  class="form-control" readonly>
+                  </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="endTime">End time</label>
+                    <input type="text" name="end_date" id="editEndTime"  class="form-control" readonly>
+                  </div>
+              </div>
+            </div>
+            
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+          <button type="submit" class="btn btn-success">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /Edit Appointment -->
+
+
 @push('page-scripts')
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
@@ -178,7 +273,6 @@
         allDaySlot: false,
         minTime : '8:00:00',
         maxTime : '18:00:00',
-
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -196,9 +290,9 @@
               },
             }
           ],
-          eventAfterRender: function (event, $el, view) {
-                $el.removeClass('fc-short');
-          },
+          // eventAfterRender: function (event, $el, view) {
+          //       $el.removeClass('fc-short');
+          // },
           select: function(start, end, allDay)
           {
               let confirmation = confirm('Do you want to add a appointment?');;
@@ -215,22 +309,38 @@
           },
            eventDrop:function(event)
            {
-              let confirmation = confirm('Do you want to re-schedule this appointment?');
-              if (confirmation) {
-                // Request ajax;
-                console.log(`Event has been drop.`);
-
-              }
-               // var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
-               // var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
-               // var title = event.title;
-               // var id = event.id;
+              editEventInCalendar(event);
            },
+           eventResize: function(info) {
+              editEventInCalendar(info);
+           },
+           eventClick: function(info) {
+              editEventInCalendar(info);
+           }
 
       });
    });
 
+   // Edit Event in calendar.
+   function editEventInCalendar (info) {
+      let confirmation = confirm('Do you want to edit this appointment?');
+      if (confirmation) {
+          let start = $.fullCalendar.formatDate(info.start, "Y-MM-DD HH:mm:ss");
+          let end = $.fullCalendar.formatDate(info.end, "Y-MM-DD HH:mm:ss");
+          $('#appointmentId').val(info.id);
+          $('#editName').val(info.patient.name);
+          $('#editEmail').val(info.patient.email);
+          $('#editMobile_no').val(info.patient.mobile_no);
+          $('#editService').val(info.service.id);
+          $('#editServiceFee').val(info.service.price);
+          $('#editServiceHour').val(info.service.duration);
+          $('#editStartTime').val(start);
+          $('#editEndTime').val(end);
+          $('.bs-appointment-edit-modal').modal('toggle');
+      }
+   }
 
+   // Select option in add modal
    $('#service').change(function () {
       let service = JSON.parse($(this).children('option:selected').attr('data-src'));
       $('#serviceId').val(service.id);
@@ -238,6 +348,14 @@
       $('#serviceHour').val(service.duration);
    });
 
+   // Select option in edit modal
+   $('#editService').change(function () {
+      let service = JSON.parse($(this).children('option:selected').attr('data-src'));
+      $('#editServiceFee').val(service.price);
+      $('#editServiceHour').val(service.duration);
+   });
+
+   // When then add modal trigger the save changes button.
    $('#addAppointmentForm').submit(function (e) {
       e.preventDefault();
       let data = $(this).serialize();
@@ -247,13 +365,33 @@
         data : data,
         success : function (response) {
             if (response.success) {
-                alert('Succesfully add new appointment please wait a couple of seconds...')
-                window.location.reload();
+                alert('Succesfully add new appointment');
+                $('.bs-appointment-add-modal').modal('toggle');
+                $('#calendar').fullCalendar('refetchEvents');
             }
         }
       });
    });
 
+   $('#editAppointmentForm').submit(function (e) {
+      e.preventDefault();
+      let appointmentId = $('#appointmentId').val();
+      let data = $(this).serialize();
+      $.ajax({
+        url : `/admin/doctorappointment/${appointmentId}`,
+        type : 'PUT',
+        data : data,
+        success : function (response) {
+            if (response.success) {
+                alert('Succesfully update the appointment');
+                $('.bs-appointment-edit-modal').modal('toggle');
+                $('#calendar').fullCalendar('refetchEvents');
+            }
+        }
+      });
+   });
+
+   // Method for display the fetched patient in add modal.
    function saveToAddAppointmentForm(buttonClicked) {
       let patient = JSON.parse($(buttonClicked).attr('data-src'));
       $('#patientId').val(patient.id);
@@ -263,10 +401,20 @@
       $('.bs-find-patient-modal').modal('hide');
    }
 
+   function isUserPressEnter(e)
+   {
+      return e.keyCode === 13;
+   }
+
+   function isInputHasValue()
+   {
+      return $('#searchPatient').val().length !== 0;
+   }
+
    // Search patient
    $('#searchPatient').keyup(function (e) {
-        if (e.keyCode == 13) { // If the user press enter.
-            if ($(this).val().length !== 0) {
+        if (isUserPressEnter(e)) { 
+            if (isInputHasValue()) {
                 $.ajax({
                     url : `/admin/patient/search/${$(this).val()}`,
                     type : 'GET',
