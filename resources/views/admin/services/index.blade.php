@@ -24,7 +24,7 @@
                   <td>Name</td>
                   <td>Price</td>
                   <td class="text-center">Per Each</td>
-                  <td class="text-center">Service minutes</td>
+                  <td class="text-center">Service Hour/s</td>
                   <td class="text-center">Actions</td>
                 </tr>
           </thead>
@@ -59,13 +59,14 @@
       </div>
       <form id="addServiceForm">
         <div class="modal-body">
+          <div class="alert alert-danger hide" id="add-service-error-message"></div>
             <div class="form-group">
                 <label for="serviceName">Service Name</label>
-                <input type="text" id="serviceName" required class="form-control" name="name">
+                <input type="text" id="serviceName" class="form-control" name="name">
             </div>
             <div class="form-group">
                 <label for="servicePrice">Service Price</label>
-                <input type="number" id="servicePrice" required class="form-control" name="price">
+                <input type="number" id="servicePrice" class="form-control" name="price">
             </div>
 
             <div class="form-group">
@@ -109,14 +110,15 @@
       </div>
       <form id="editServiceForm">
         <div class="modal-body">
+        <div class="alert alert-danger hide" id="edit-service-error-message"></div>
             <div class="form-group">
                 <label for="editServiceName">Service Name</label>
-                <input type="text" id="editServiceName" required class="form-control" name="name">
+                <input type="text" id="editServiceName"  class="form-control" name="name">
             </div>
 
             <div class="form-group">
                 <label for="editServicePrice">Service Price</label>
-                <input type="number" id="editServicePrice" required class="form-control" name="price">
+                <input type="number" id="editServicePrice"  class="form-control" name="price">
             </div>
 
             <div class="form-group">
@@ -177,6 +179,17 @@
               alert('Successfully add new service please wait a couple of seconds.');
               window.location.reload();
           }
+      },
+     error : function (response) {
+           if (response.status === 422) {
+              let errors = response.responseJSON.errors;
+              let messages = "";
+                Object.values(errors).forEach((error) => {
+                    messages += `<li>${error}</li>`;
+                });
+                $('#add-service-error-message').html(messages);
+                $('#add-service-error-message').removeClass('hide');
+          }
       }
     })
   });
@@ -203,6 +216,17 @@
             alert('Succesfully update the record please wait a couple of seconds..');
             window.location.reload();
           }
+      },
+      error : function (response) {
+             if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                  Object.values(errors).forEach((error) => {
+                      messages += `<li>${error}</li>`;
+                  });
+                  $('#edit-service-error-message').html(messages);
+                  $('#edit-service-error-message').removeClass('hide');
+            }
       }
     })
   });

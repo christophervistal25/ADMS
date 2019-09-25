@@ -138,6 +138,7 @@
 
     let displayVacantsTime = (response, property) => {
         if (response.availables[property]) {
+          let vacants = "";
           let hasTimeClose = response.time_close.length !== 0;
           // new Set removing the duplicate values.
           let unique = [...new Set(response.availables[property])];
@@ -155,18 +156,23 @@
                         );
 
                       if (betweenCloseTime) {
-                          $('#vacants').append(`
-                            <tr>
+                        vacants += `  <tr>
                               <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
                               <td class="text-center"><b>${property.toUpperCase()}</b></td>
                               <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
-                            </tr>
-                        `);
+                            </tr>`;
+                          
                       }
                     });
+                } else {
+                   vacants += `  <tr>
+                              <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
+                              <td class="text-center"><b>${property.toUpperCase()}</b></td>
+                              <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
+                            </tr>`;
                 }
-               
-              
+
+                $('#vacants').append(vacants);
             });
         }
         $('#recommendTime').removeClass('hide');

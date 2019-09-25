@@ -17,7 +17,7 @@ class Patient extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mobile_no'
+        'patient_number', 'name', 'email', 'password', 'mobile_no'
     ];
 
     /**
@@ -37,6 +37,16 @@ class Patient extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     public static function boot()
+    {
+        parent::boot();
+        self::creating(function(Patient $patient) {
+            $patientCount = Patient::count();
+            $patient->patient_number = 'PN' . '-' . date('Y') .  '-' . ++$patientCount;
+            return true;
+        });
+    }
 
     public function setPasswordAttribute($value)
     {

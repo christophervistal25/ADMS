@@ -11,6 +11,7 @@ class CloseDay extends Model
     public $dates       = ['start', 'end'];
 
 
+
   /*public function getStartAttribute($value)
   {
     return Carbon::parse($value)->format('m/d/Y h:i A');

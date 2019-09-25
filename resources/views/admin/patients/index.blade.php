@@ -21,6 +21,7 @@
         <table class="table table-striped table-bordered" id="datatable">
           <thead>
                 <tr>
+                    <td>Patient Number</td>
                     <td>Name</td>
                     <td>Email</td>
                     <td>Mobile</td>
@@ -31,6 +32,7 @@
           <tbody>
               @foreach($patients as $patient)
                 <tr>
+                    <td class="text-center font-weight-bold">{{ $patient->patient_number }}</td>
                     <td class="text-center">{{ $patient->name }}</td>
                     <td class="text-center">{{ $patient->email }}</td>
                     <td class="text-center">{{ $patient->mobile_no }}</td>
@@ -60,6 +62,7 @@
       </div>
       <form id="editPatientInfoForm">
         <div class="modal-body" id="informationContainer">
+            <div class="alert alert-danger hide" id="edit-patient-error-message"></div>
             <div class="form-group">
                 <label for="name">Fullname <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="name" name="name" >
@@ -169,6 +172,17 @@
                   alert('Succesfully update the information of patient please wait a couple of seconds...');
                   window.location.reload();
               }
+          },
+          error : function (response) {
+             if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                  Object.values(errors).forEach((error) => {
+                      messages += `<li>${error}</li>`;
+                  });
+                  $('#edit-patient-error-message').html(messages);
+                  $('#edit-patient-error-message').removeClass('hide');
+            }
           }
         });
     });

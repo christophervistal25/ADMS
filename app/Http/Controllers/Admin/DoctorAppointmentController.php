@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Appointment;
 use App\Doctor;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Appointment\AddRequest;
 use App\Http\Resources\DoctorAppointmentResource;
 use App\Patient;
 use Carbon\Carbon;
@@ -44,13 +45,10 @@ class DoctorAppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddRequest $request)
     {
         $this->validate($request, [
-            'service_id' => 'required',
-            'doctor_id'     => 'required',
-            'start_date' => 'required',
-            'end_date'   => 'required',
+
         ]);
 
          DB::beginTransaction();

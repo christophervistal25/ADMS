@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('name');
             $table->decimal('price', 8, 2);
             $table->boolean('per_each');
-            $table->enum('duration', [1, 2, 3, 4])->default(1);
+            $table->integer('duration');
             $table->timestamps();
         });
     }

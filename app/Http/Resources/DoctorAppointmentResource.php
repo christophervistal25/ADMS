@@ -20,7 +20,7 @@ class DoctorAppointmentResource extends JsonResource
 
         return [
             'id'        => $this->id,
-            'title'     => $this->service->name . ' - ' . $this->service->appointment->patients[0]->name,
+            'title'     => $this->service->name . ' - ' . $patient->name . '(' . $patient->patient_number . ')',
             'start'     => $this->start_date->format('Y-m-d H:i:s'),
             'end'       => $this->end_date->format('Y-m-d H:i:s'),
             'service'   => [

@@ -54,6 +54,7 @@
       </div>
       <form id="addDoctorForm">
         <div class="modal-body">
+          <div class="alert alert-danger hide" id="add-doctor-error-message"></div>
             <div class="form-group">
                 <label for="addDoctorFullname">Fullname</label>
                 <input type="text" id="addDoctorFullname" class="form-control" name="fullname">
@@ -84,6 +85,7 @@
       </div>
       <form id="editDoctorForm">
         <div class="modal-body">
+          <div class="alert alert-danger hide" id="edit-doctor-error-message"></div>
             <div class="form-group">
                 <label for="fullname">Fullname</label>
                 <input type="text" id="fullname" class="form-control" name="fullname">
@@ -128,7 +130,19 @@
                 alert('Succesfully add new doctor please wait a couple of seconds...');
                 window.location.reload();
             }
-        }
+        },
+       error : function (response, status) {
+            // Validation fail.
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                  Object.values(errors).forEach((error) => {
+                      messages += `<li>${error}</li>`;
+                  });
+                  $('#add-doctor-error-message').html(messages);
+                  $('#add-doctor-error-message').removeClass('hide');
+            }
+       }
       })
   });
 
@@ -153,7 +167,19 @@
                 $('.bs-doctor-edit-modal').modal('toggle');
                 window.location.reload();
             }
-        }
+        },
+       error : function (response, status) {
+            // Validation fail.
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                  Object.values(errors).forEach((error) => {
+                      messages += `<li>${error}</li>`;
+                  });
+                  $('#edit-doctor-error-message').html(messages);
+                  $('#edit-doctor-error-message').removeClass('hide');
+            }
+       }
      });
   });
 

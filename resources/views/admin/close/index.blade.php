@@ -24,6 +24,7 @@
                 <tr>
                   <td>Date</td>
                   <td>All Day</td>
+                  <td>Close For</td>
                   <td>Created on</td>
                   <td>Actions</td>
                 </tr>
@@ -32,7 +33,14 @@
             @foreach($dates as $date)
               <tr>
                 <td class="text-center"><b>{{ $date->start->format('l jS \\of F h:i A') }} to {{ $date->end->format('h:i A - Y') }}</b></td>
-                <td class="text-center">{{ ($date->all_day === 1) ? 'Close All Day' : '' }}</td>
+                <td class="text-center">
+                  @if($date->all_day === 1)
+                        <span class="badge">YES</span>
+                    @else
+                        <span class="badge">NO</span>
+                  @endif
+                </td>
+                <td class="text-center">{{ $date->start->diffInHours($date->end) }}  Hour/s</td>
                 <td class="text-center">{{ $date->created_at->diffForHumans() }}</td>
                 <td class="text-center">
                   <button data-src="{{ $date }}" class="btn btn-info btn-success btn-edit-close-day"><i class="fas fa-edit"></i></button>
@@ -58,9 +66,12 @@
       </div>
       <form id="addCloseDayForm">
         <div class="modal-body">
-            <div class="alert alert-success " role="alert">
+            
+            <div class="alert alert-danger hide" id="add-close-day-error-message"></div>
+            <div class="alert alert-success" role="alert">
               Please review your inputs this data will effect in patient setting an appointment.
             </div>
+
                 <div class="form-group">
                   <label for="date">Start</label>
                   <div class='input-group date' id='datetimepicker1'>
@@ -170,7 +181,22 @@
                   alert('Succesfully add new close day please wait a couple of seconds...');
                   window.location.reload();
                 }
-            }
+            },
+            error : function (response, status) {
+            // Validation fail.
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                  Object.values(errors).forEach((error) => {
+                      messages += `<li>${error}</li>`;
+                  });
+                  $('#add-close-day-error-message').html(messages);
+                  $('#add-close-day-error-message').removeClass('hide');
+                } else if (response.status === 400) { // the two dates already exists.
+                    $('#add-close-day-error-message').html(response.responseJSON.message);
+                    $('#add-close-day-error-message').removeClass('hide');
+                }
+           }
           });
        });
 

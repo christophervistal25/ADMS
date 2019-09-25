@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\CloseDay;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\CloseDayRepositories;
+use App\Rules\IsDateUnique;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+
 
 class CloseDaysController extends Controller
 {
     public function __construct(CloseDayRepositories $closeDayRepo)
     {
-        $this->middleware('auth:admin');
+        $this->middleware(['auth:admin']);
         $this->closeDayRepo = $closeDayRepo;
     }
     /**
@@ -44,14 +49,23 @@ class CloseDaysController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request, [
-            'start' => 'date',
-            'end'   => 'date',
-        ]);
-
         $start   = Carbon::parse($request->start);
         $end     = Carbon::parse($request->end);
+        $validator = Validator::make([], []); 
+
+        request()->validate([
+            'start' => ['date', new IsDateUnique($start), 'before:end'],
+            'end'   => ['date',  new IsDateUnique($end), 'after:start'],
+        ]);
+
+        if (CloseDay::whereTime('start', '<=', $start)->whereTime('end','>=', $end)->exists()) {
+            $validator->errors()->add('in_between', 'Two dates are in between of other dates');
+        }
+
+        if (count($validator->errors()->messages()) > 0) {
+            throw new ValidationException($validator);
+        }
+
         $all_day = $this->closeDayRepo->isAllDay($start, $end);
         
         CloseDay::create([

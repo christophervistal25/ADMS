@@ -30,10 +30,10 @@
                       <div class="menu_section">
                         <h3>General</h3>
                         <ul class="nav side-menu">
-                          <li><a><i class="fas fa-home"></i> Appointment <span class="fas fa-chevron-down"></span></a>
+                          <li><a><i class="fas fa-home"></i> Appointments <span class="fas fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                               <li><a href="{{ route('appointment.create') }}">Set Appointment</a></li>
-                              <li><a href="{{ route('appointment.index') }}">Appointments <span class="badge">{{ App\Patient::getAppointments(Auth::user()->id)->appointments->count() }} </span></a></li>
+                              <li><a href="{{ route('appointment.index') }}">View Appointments <span class="badge">{{ App\Patient::getAppointments(Auth::user()->id)->appointments->count() }} </span></a></li>
                             </ul>
                           </li>
                         </ul>

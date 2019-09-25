@@ -16,35 +16,35 @@ class ServiceSeeder extends Seeder
     		'name' => 'Filling',
     		'price' => 600,
     		'per_each' => 1,
-            'duration' => 1,
+            'duration' => rand(1,4),
     	]);
 
     	Service::create([
     		'name' => 'Pasta',
     		'price' => 700,
     		'per_each' => 0,
-            'duration' => 1,
+            'duration' => rand(1,4),
     	]);
 
     	Service::create([
     		'name' => 'Cleaning',
     		'price' => 800,
     		'per_each' => 0,
-            'duration' => 1,
+            'duration' => rand(1,4),
     	]);
 
     	Service::create([
     		'name' => 'Denture',
     		'price' => 600,
     		'per_each' => 1,
-            'duration' => 1,
+            'duration' => rand(1,4),
     	]);
 
     	Service::create([
     		'name' => 'Braces upper and lower',
     		'price' => 50000,
     		'per_each' => 0,
-            'duration' => 1,
+            'duration' => rand(1,4),
     	]);
     }
 }

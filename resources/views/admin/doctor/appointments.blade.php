@@ -33,15 +33,15 @@
         <h4 class="modal-title" id="findPatient">Find Patient</h4>
       </div>
         <div class="modal-body">
-          <div class="alert alert-info" role="alert"><span style="color :white;">Enter the name of patient then press enter</span></div>
+          <div class="alert alert-info" role="alert"><span style="color :white;">Enter the PATIENT NUMBER of patient then press enter</span></div>
           <div class="form-group">
-            <input type="text" name="name" placeholder="Search patient firstname or lastname..." class="form-control" id="searchPatient" autocomplete="off">
+            <input type="text" name="patient_number" placeholder="Search patient firstname or lastname..." class="form-control" id="searchPatient" autocomplete="off">
           </div>
           <table class="table table-bordered">
             <thead>
               <tr>
+                <td>Patient Number</td>
                 <td>Name</td>
-                <td>Email</td>
                 <td>Mobile no</td>
                 <td>Registered on</td>
                 <td>Action</td>
@@ -69,9 +69,11 @@
       <form id="addAppointmentForm">
         <div class="modal-body">
             <div class="pull-right">
-                <button type="button" data-toggle="modal" class="btn btn-primary btn-sm" data-target=".bs-find-patient-modal">Find patient</button>
+                <a class="btn btn-primary btn-sm" href="{{ route('patient.create') }}">Entry new patient</a>
+                <button type="button" data-toggle="modal" class="btn btn-success btn-sm" data-target=".bs-find-patient-modal">Find patient</button>
             </div>
             <div class="clearfix"></div>
+            <div class="alert alert-danger hide" id="add-appointment-error-message"></div>
             <div class="row">
               <div class="col-lg-6">
                      <input type="hidden" name="patient_id" id="patientId">
@@ -271,6 +273,7 @@
        let calendar = $('#calendar').fullCalendar({
         editable: true,
         allDaySlot: false,
+        slotMinutes : 1,
         minTime : '8:00:00',
         maxTime : '18:00:00',
         header: {
@@ -369,6 +372,17 @@
                 $('.bs-appointment-add-modal').modal('toggle');
                 $('#calendar').fullCalendar('refetchEvents');
             }
+        },
+        error : function(response) {
+          if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                let messages = "";
+                Object.values(errors).forEach((error) => {
+                    messages += `<li>${error}</li>`;
+                });
+              $('#add-appointment-error-message').html(messages);
+              $('#add-appointment-error-message').removeClass('hide');
+          }
         }
       });
    });
@@ -387,7 +401,8 @@
                 $('.bs-appointment-edit-modal').modal('toggle');
                 $('#calendar').fullCalendar('refetchEvents');
             }
-        }
+        },
+        
       });
    });
 
@@ -425,8 +440,8 @@
                             patients.forEach((patient) => {
                             tableBody += `
                             <tr>
+                              <td>${patient.patient_number}</td>
                               <td>${patient.name}</td>
-                              <td>${patient.email}</td>
                               <td>${patient.mobile_no}</td>
                               <td>${patient.created_at}</td>
                               <td><button class='btn btn-sm btn-primary' onclick="saveToAddAppointmentForm(this)" data-src='${JSON.stringify(patient)}'>SELECT</button></td>

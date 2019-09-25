@@ -32,6 +32,7 @@ class AccountsSeeder extends Seeder
             'home_address'    => 'Tandag City',
         ]);
 
+    
         Admin::create([
             'name' => 'Administrator Vistal',
             'email' => 'admin@yahoo.com',

@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\AddRequest;
+use App\Http\Requests\Patient\EditRequest;
 use App\Patient;
 use App\PatientInformation;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Exception;
 
 class PatientController extends Controller
 {
@@ -68,10 +69,10 @@ class PatientController extends Controller
      
     }
 
-    public function searchPatient(string $name)
+    public function searchPatient(string $patient_number)
     {
-        return Patient::where('name', $name)
-                ->orWhere('name', 'like', '%' . $name . '%')
+        return Patient::where('patient_number', $patient_number)
+                ->orWhere('patient_number', 'like', '%' . $patient_number . '%')
                 ->get();
     }
 
@@ -104,7 +105,7 @@ class PatientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(EditRequest $request,  $id)
     {
         DB::beginTransaction();
          try {
