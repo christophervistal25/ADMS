@@ -1,9 +1,5 @@
 <?php
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', 'HomeController@index');
 
 Route::redirect('login', '/patient/login', 301);
 
