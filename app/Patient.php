@@ -17,7 +17,7 @@ class Patient extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'patient_number', 'name', 'email', 'password', 'mobile_no'
+        'patient_number', 'name', 'email', 'password', 'mobile_no', 'profile'
     ];
 
     /**
@@ -50,7 +50,7 @@ class Patient extends Authenticatable
 
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = bcrypt($value);
+        return $this->attributes['password'] = bcrypt($value);
     }
 
     public function appointments()
@@ -61,6 +61,11 @@ class Patient extends Authenticatable
     public function info()
     {
         return $this->hasOne('App\PatientInformation');
+    }
+
+    public function examinations()
+    {
+        return $this->hasMany('App\Examination');
     }
 
     public static function getAppointments(int $patientId)

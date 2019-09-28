@@ -7,10 +7,10 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
           <div class="x_title">
-            @if(\Session::has('success'))
+            @if(Session::has('success'))
               <div class="alert alert-success" role="alert">
-                  {{ \Session::get('success') }}
-                  <span style="color:white;">do you want to add <b>Examination Record Chart</b> for this patient? <a href="{{ route('patient.index') }}" style=" color :white;text-decoration: underline;">(click this underlined text)</a></span>
+                  {{ Session::get('success') }}
+                  <span style="color:white;">do you want to add <b>Examination Record Chart</b> for this patient? <a href="{{ route('patient.examination.record.create', [Session::get('patient_id') ]) }}" style=" color :white;text-decoration: underline;">(click this underlined text)</a></span>
               </div>
               @else
                 @include('templates.error')

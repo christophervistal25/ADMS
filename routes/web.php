@@ -22,6 +22,24 @@ Route::group(['prefix' => 'admin'] , function () {
     Route::get('/patient/search/{name}', 'Admin\PatientController@searchPatient');
     Route::resource('patient', 'Admin\PatientController');
 
+    Route::get('/patient/examination/record/{patient}', 'Admin\PatientExaminationRecordController@create')
+          ->name('patient.examination.record.create');
+
+    Route::post('/patient/examination/record/{patient}', 'Admin\PatientExaminationRecordController@store')
+          ->name('patient.examination.record.store');
+
+    Route::get('/patient/examination/history/{patient}', 'Admin\PatientExaminationRecordController@history')
+          ->name('patient.examination.history');
+
+    Route::get('/patient/examination/{patient}', 'Admin\PatientExaminationRecordController@show')
+          ->name('patient.examination.show');
+
+    Route::get('/patient/examination/edit/{patient}', 'Admin\PatientExaminationRecordController@edit')
+          ->name('patient.examination.edit');
+
+    Route::put('/patient/examination/edit/{patient}', 'Admin\PatientExaminationRecordController@update')
+          ->name('patient.examination.update');
+
     Route::resource('close', 'Admin\CloseDaysController');
 });
 

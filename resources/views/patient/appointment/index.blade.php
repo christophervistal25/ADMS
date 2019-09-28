@@ -1,5 +1,5 @@
 @extends('templates.dashboard-template')
-@section('title', 'List of Doctors')
+@section('title', 'List of your appointments')
 @section('content')
 @prepend('page-css')
 <!-- iCheck -->

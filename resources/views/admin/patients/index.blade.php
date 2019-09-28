@@ -26,7 +26,7 @@
                     <td>Email</td>
                     <td>Mobile</td>
                     <td>Registered at</td>
-                    <td>Actions</td>
+                    <td class="text-center">Actions</td>
                 </tr>
           </thead>
           <tbody>
@@ -37,8 +37,10 @@
                     <td class="text-center">{{ $patient->email }}</td>
                     <td class="text-center">{{ $patient->mobile_no }}</td>
                     <td class="text-center">{{ $patient->created_at->format('l jS \\of F Y') }}</td>
-                    <td class="text-center">
-                      <button class="btn btn-sm btn-success btn-edit-info" data-src="{{ $patient }}">INFO</button>
+                    <td class="text-center" >
+                      <button class="btn btn-sm btn-success btn-edit-info" data-src="{{ $patient }}"><i class="fa fa-user"></i> Information</button>
+                      <a class="btn btn-primary btn-sm" href="{{ route('patient.examination.record.create', [$patient->id]) }}"> <i class="fas fa-plus"></i> Add Examination Record</a>
+                       <a class="btn btn-info btn-sm" href="{{ route('patient.examination.history', [$patient->id]) }}"> <i class="fas fa-history"></i> Examination Record History <span class="badge" style="color:black;">{{ $patient->examinations_count }}</span> </a>
                     </td>
                 </tr>
               @endforeach

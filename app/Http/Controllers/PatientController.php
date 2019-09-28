@@ -7,6 +7,7 @@ use App\PatientInformation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use JD\Cloudder\Facades\Cloudder;
 
 class PatientController extends Controller
 {
@@ -21,6 +22,7 @@ class PatientController extends Controller
      */
     public function index()
     {
+        return redirect()->route('appointment.index');
         return view('patient.dashboard');
     }
 
@@ -42,31 +44,43 @@ class PatientController extends Controller
             'sex'            => ['required',Rule::in(['Women', 'Men', 'Choose not to say'])],
             'occupation'     => 'required',
             'home_address'   => 'required',
+            'profile'       => 'nullable',
         ];
+
+
 
         if ( !is_null($request->passwoord) || !is_null($request->password_confirmation)) {
             $rules['password'] = 'required|min:8|confirmed';
         }
+        
         $this->validate($request, $rules);
 
-        $information = new PatientInformation();
-        $information->nickname       = $request->nickname;
-        $information->birthdate      = $request->birthdate;
-        $information->martial_status = $request->martial_status;
-        $information->sex            = $request->sex;
-        $information->occupation     = $request->occupation;
-        $information->home_address   = $request->home_address;
+        if ($request->has('profile')) {
+            $image_name = request()->file('profile')->getRealPath();
+            Cloudder::upload($image_name, null);
+            $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => 150, "height"=> 150]);
+            $patient->profile = $image_url;
+        }
 
 
-        $patient->name = $request->name;
-        $patient->email = $request->email;
+        $patient->info->nickname       = $request->nickname;
+        $patient->info->birthdate      = $request->birthdate;
+        $patient->info->martial_status = $request->martial_status;
+        $patient->info->sex            = $request->sex;
+        $patient->info->occupation     = $request->occupation;
+        $patient->info->home_address   = $request->home_address;
+
+
+        $patient->name      = $request->name;
+        $patient->email     = $request->email;
         $patient->mobile_no = $request->mobile_no;
+        
         if (!is_null($request->password)) {
             $patient->password = $request->password;
         }
+        
+        $patient->push();
 
-        // $patient->save();
-        $patient->info()->save($information);
         return back()->with('success', 'Succesfully update your profile.');
     }
 }

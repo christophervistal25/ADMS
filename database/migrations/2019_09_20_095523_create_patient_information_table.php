@@ -22,6 +22,7 @@ class CreatePatientInformationTable extends Migration
             $table->enum('sex', ['Women', 'Men', 'Choose not to say']);
             $table->string('occupation');
             $table->string('home_address');
+            // $table->string('profile')->default('no_image.png');
             $table->timestamps();
         });
     }

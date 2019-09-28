@@ -20,6 +20,11 @@
 @stack('page-scripts')
 <!-- Custom Theme Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gentelella/1.4.0/js/custom.min.js" integrity="sha256-MFFaor/dZaooBp47D6gjMOSG9AEqHdNGUtYBN3sPEL4=" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function (){
+      	$('.ui-pnotify').remove();
+   });
+</script>
 
 </body>
 </html>

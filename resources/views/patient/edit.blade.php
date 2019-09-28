@@ -2,6 +2,7 @@
 @section('title', 'Edit your account')
 @section('content')
 @prepend('page-css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous" />
 @endprepend
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -11,7 +12,7 @@
           </div>
             <div class="x_content">
               @include('templates.error')
-              <form action="{{ route('account.settings.update', [Auth::user()]) }}" method="POST">
+              <form action="{{ route('account.settings.update', [Auth::user()]) }}" method="POST" enctype="multipart/form-data">
                 <div class="alert alert-{{ \Session::has('success') ? 'success' : 'info' }}" role="alert">
                   @if(\Session::has('success'))
                     {{ \Session::get('success') }}
@@ -21,6 +22,11 @@
                 </div>
                   @csrf
                   @method('PUT')
+                  <div class="form-group">
+                    <label for="name">Patient Number</label>
+                    <input type="text" class="form-control" readonly value="{{ Auth::user()->patient_number }}">
+                  </div>
+
                   <div class="form-group">
                     <label for="name">Fullname</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ?? Auth::user()->name }}">
@@ -90,6 +96,11 @@
                     <textarea name="home_address" id="home_address" class="form-control" cols="30" rows="10">{{ old('home_address') ?? $patient->info->home_address ?? '' }}</textarea>
                   </div>
 
+                  <div class="form-group">
+                      <label for="profile">Profile</label>
+                      <input type="file" id="profile" name="profile">
+                  </div>
+
                  <input type="submit" value="Update" class="btn btn-primary  btn-success pull-right">
               </form>
             </div>
@@ -97,7 +108,7 @@
     </div>
 </div>
 @push('page-scripts')
-
+<script>
 </script>
 @endpush
 @endsection

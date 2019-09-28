@@ -5,7 +5,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a  class="site_title text-center"><i class="fas fa-tooth"></i> <span>ADMS</span></a>
+              <a  class="site_title text-center"><i class="fas fa-hospital"></i> <span>ADIS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -13,7 +13,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                       <div class="profile_pic">
-                        <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="{{ Auth::user()->profile }}" alt="..." class="img-circle profile_img">
                       </div>
                       <div class="profile_info">
                         <span>Welcome,</span>
@@ -57,7 +57,7 @@
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="images/img.jpg" alt="">{{ Auth::user()->name }}
+                            <img src="{{ Auth::user()->profile }}" alt="">{{ Auth::user()->name }}
                             <span class=" fas fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -107,7 +107,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                       <div class="profile_pic">
-                        <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                        <img src="{{ Auth::user()->profile }}" alt="..." class="img-circle profile_img">
                       </div>
                       <div class="profile_info">
                         <span>Welcome,</span>
@@ -132,7 +132,7 @@
                           </li>
                         </ul>
                          <ul class="nav side-menu">
-                            <li><a><i class="fas fa-fa-calendar"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
+                            <li><a><i class="fas fa-user-md"></i> Doctors <span class="pull-right fas fa-chevron-down"></span></a>
                               <ul class="nav child_menu">
                                 <li><a href="{{ route('doctor.index') }}">List of doctors & appointments</a></li>
                               </ul>
@@ -169,18 +169,11 @@
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="images/img.jpg" alt="">{{ Auth::user()->name }}
+                            <img src="{{ Auth::user()->profile }}" alt="">{{ Auth::user()->name }}
                             <span class=" fa fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
-                            <li><a href="javascript:;"> Profile</a></li>
-                            <li>
-                              <a href="javascript:;">
-                                <span class="badge bg-red pull-right">50%</span>
-                                <span>Settings</span>
-                              </a>
-                            </li>
-                            <li><a href="javascript:;">Help</a></li>
+                            <li><a href="javascript:;"><i class="fas fa-profile"></i> Profile</a></li>
                             <li>
                               <a href="{{ route('admin.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                               <i class="fa fa-sign-out pull-right"></i>Logout</a>

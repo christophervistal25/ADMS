@@ -24,7 +24,9 @@ class PatientController extends Controller
      */
     public function index()
     {
-        $patients = Patient::with('info')->get();
+        $patients = Patient::with('info')
+                            ->withCount('examinations')
+                            ->get();
         return view('admin.patients.index', compact('patients'));
     }
 
@@ -62,7 +64,7 @@ class PatientController extends Controller
             $patient->mobile_no          = $request->mobile_no;
             $patient->info()->save($information);
             DB::commit();
-            return back()->with('success', 'Succesfully add new patient');
+            return back()->with('success', 'Succesfully add new patient')->with('patient_id', $patient->id);
          } catch (Exception $e) {
             DB::rollback();
          }

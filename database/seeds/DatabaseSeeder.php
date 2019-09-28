@@ -11,12 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // factory('App\Doctor')->create();
+        factory('App\Doctor')->create();
         $this->call([
             AccountsSeeder::class,
             ServiceSeeder::class,
             CloseDaysSeeder::class,
             // AppointmentSeeder::class,
+            ExaminationRecordSeeder::class,
         ]);
     }
 }

@@ -16,7 +16,7 @@
       </div>
       <div class="x_content">
         <div class="pull-right">
-          <button class="btn btn-success" id="btnAddService"><i class="fa fa-plus"></i> Add Service</button> 
+          <button class="btn btn-primary" id="btnAddService"><i class="fa fa-plus"></i> Add Service</button> 
         </div>
         <table class="table table-striped table-bordered" id="datatable">
           <thead>
@@ -36,8 +36,8 @@
                 <td class="text-center"><span class="badge"><b>{{ $service->per_each === 0 ? 'No' : 'Yes' }}</b></span></td>
                 <td class="text-center"><b>{{ $service->duration }}</b></td>
                 <td class="text-center">
-                  <button class="btn btn-success btn-edit-service" data-src="{{ $service }}"><i class="fa fa-edit"></i></button> 
-                  <button class="btn btn-danger btn-delete-service" data-src="{{ $service }}"><i class="fa fa-trash"></i></button>
+                  <button class="btn btn-success btn-sm btn-edit-service" data-src="{{ $service }}"><i class="fa fa-edit"></i></button> 
+                  <button class="btn btn-danger btn-sm btn-delete-service" data-src="{{ $service }}"><i class="fa fa-trash"></i></button>
                 </td>
               </tr>
             @endforeach
