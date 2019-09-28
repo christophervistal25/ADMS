@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         // factory('App\Doctor')->create();
         $this->call([
             AccountsSeeder::class,
-            Doctor::class,
+            DoctorSeeder::class,
             ServiceSeeder::class,
             CloseDaysSeeder::class,
             // AppointmentSeeder::class,

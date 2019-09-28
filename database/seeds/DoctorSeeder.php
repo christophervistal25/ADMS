@@ -13,7 +13,7 @@ class DoctorSeeder extends Seeder
     public function run()
     {
         Doctor::create([
-        	'name' => 'John Doe',
+        	'fullname' => 'John Doe',
         	'title' => 'Dr.',
         ]);
     }
