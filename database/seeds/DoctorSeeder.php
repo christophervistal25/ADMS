@@ -1,5 +1,6 @@
 <?php
 
+use App\Doctor;
 use Illuminate\Database\Seeder;
 
 class DoctorSeeder extends Seeder
