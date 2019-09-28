@@ -25,6 +25,5 @@
       	$('.ui-pnotify').remove();
    });
 </script>
-
 </body>
 </html>

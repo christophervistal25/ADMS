@@ -534,12 +534,6 @@ $('polygon, path').on('highlightEvent' , function (e) {
             }
         });
     });
-
-
-
-
-   
- 
 </script>
 @endpush
 @endsection
