@@ -49,6 +49,16 @@ class ResetPasswordController extends Controller
         ]);
     }
 
+    protected function resetPassword($patient, $password)
+    {
+        $patient->forceFill([
+            'password' => $password,
+            'remember_token' => str_random(60),
+        ])->save();
+
+        $this->guard()->login($patient);
+    }
+
     protected function guard()
     {
         return Auth::guard('patient');

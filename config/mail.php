@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
+    'port' => env('MAIL_PORT', 587),
+    'from' => ['address' => env('MAIL_FROM_ADDRESS', 'apitsubiri@gmail.com'), 'name' => env('MAIL_FROM_NAME', 'Apit Subiri Dental Clinic')],
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'username' => env('MAIL_USERNAME'),
+    'password' => env('MAIL_PASSWORD'),
+    'sendmail' => '/usr/sbin/sendmail -bs',
+    'pretend' => false,
+];
+
+return [
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +42,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +69,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'adis@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Adit Subiri dental clinic'),
     ],
 
     /*
@@ -71,7 +84,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +97,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME'),
+    'username' => env('christophervistal26@gmail.com'),
 
-    'password' => env('MAIL_PASSWORD'),
+    'password' => env('Longbak22cute'),
 
     /*
     |--------------------------------------------------------------------------
