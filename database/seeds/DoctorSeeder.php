@@ -1,7 +1,7 @@
 <?php
 
-use App\Doctor;
 use Illuminate\Database\Seeder;
+use App\Doctor;
 
 class DoctorSeeder extends Seeder
 {
