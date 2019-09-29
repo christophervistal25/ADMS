@@ -43,6 +43,9 @@ Route::group(['prefix' => 'admin'] , function () {
     Route::get('/patient/examination/history/print/{ids}', 'Admin\ExaminationHistoryPrintController@print');
 
     Route::resource('close', 'Admin\CloseDaysController');
+
+    Route::get('/account/setting', 'AdminController@edit')->name('admin.account.setting');
+    Route::put('/account/setting/{admin}', 'AdminController@update')->name('admin.update.account.setting');
 });
 
 
@@ -64,6 +67,7 @@ Route::group(['prefix' => 'patient'] , function () {
 
     Route::get('/edit', 'PatientController@edit')->name('account.settings');
     Route::put('/edit/{patient}', 'PatientController@update')->name('account.settings.update');
+
 
 });
 

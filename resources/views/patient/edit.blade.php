@@ -1,9 +1,6 @@
 @extends('templates.dashboard-template')
 @section('title', 'Edit your account')
 @section('content')
-@prepend('page-css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" integrity="sha256-e47xOkXs1JXFbjjpoRr1/LhVcqSzRmGmPqsrUQeVs+g=" crossorigin="anonymous" />
-@endprepend
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
