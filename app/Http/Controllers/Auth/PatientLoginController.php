@@ -27,9 +27,13 @@ class PatientLoginController extends Controller
     public function loginPatient(Request $request)
     {
       $patient = Patient::where('email', $request->email)->first();
-      if (is_null($patient->password)) {
-          return redirect()->route('password.request', ['email' => $patient->email]);
+      // If the patient doesn't have a password set.
+      if ($patient) {
+          if (is_null($patient->password)) {
+              return redirect()->route('password.request', ['email' => $patient->email]);
+          }
       }
+
       // Attempt to log the user in
       if (Auth::guard('patient')->attempt(['email' => $request->email, 'password' => $request->password])) {
           // if successful, then redirect to their intended location
