@@ -34,7 +34,7 @@
               <tr>
                 <td class="text-center"><b>{{ $date->start->format('l jS \\of F h:i A') }} to {{ $date->end->format('h:i A - Y') }}</b></td>
                 <td class="text-center">
-                  @if($date->all_day === 1)
+                  @if($date->all_day)
                         <span class="badge">YES</span>
                     @else
                         <span class="badge">NO</span>

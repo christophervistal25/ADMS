@@ -33,7 +33,7 @@
               <tr>
                 <td>{{ $service->name }}</td>
                 <td class="text-center"><b>{{ $service->price }}</b></td>
-                <td class="text-center"><span class="badge"><b>{{ $service->per_each === 0 ? 'No' : 'Yes' }}</b></span></td>
+                <td class="text-center"><span class="badge"><b>{{ $service->per_each ? 'Yes' : 'No' }}</b></span></td>
                 <td class="text-center"><b>{{ $service->duration }}</b></td>
                 <td class="text-center">
                   <button class="btn btn-success btn-sm btn-edit-service" data-src="{{ $service }}"><i class="fa fa-edit"></i></button> 
