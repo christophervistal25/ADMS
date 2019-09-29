@@ -134,8 +134,8 @@
              <div class="form-group">
                 <label for="editIsServicePerEach">Price per each</label>
                 <select name="per_each" id="editIsServicePerEach" class="form-control">
-                  <option value="0">No</option>
-                  <option value="1">Yes</option>
+                  <option value="true">No</option>
+                  <option value="false">Yes</option>
                 </select>
             </div>
             
@@ -199,7 +199,7 @@
     serviceId = service.id;
       $('#editServiceName').val(service.name);
       $('#editServicePrice').val(service.price);
-      $('#editIsServicePerEach').val(service.per_each);
+      $('#editIsServicePerEach').val(service.per_each ? 'true' : 'false');
       $('#editDuration').val(service.duration);
       $('.bs-edit-service-modal').modal('toggle');
   });
