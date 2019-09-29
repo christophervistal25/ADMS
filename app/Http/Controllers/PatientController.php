@@ -54,7 +54,6 @@ class PatientController extends Controller
         }
         
         $this->validate($request, $rules);
-
         if ($request->has('profile')) {
             $image_name = request()->file('profile')->getRealPath();
             Cloudder::upload($image_name, null);
@@ -83,6 +82,7 @@ class PatientController extends Controller
             $patient->info->delete();    
         }
         
+        $patient->save();
         $patient->info()->save($information);
         
 
