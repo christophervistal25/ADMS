@@ -134,8 +134,8 @@
              <div class="form-group">
                 <label for="editIsServicePerEach">Price per each</label>
                 <select name="per_each" id="editIsServicePerEach" class="form-control">
-                  <option value="true">No</option>
-                  <option value="false">Yes</option>
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
                 </select>
             </div>
             
