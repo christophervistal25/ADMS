@@ -62,13 +62,13 @@ class PatientController extends Controller
             $patient->profile = $image_url;
         }
 
-
-        $patient->info->nickname       = $request->nickname;
-        $patient->info->birthdate      = $request->birthdate;
-        $patient->info->martial_status = $request->martial_status;
-        $patient->info->sex            = $request->sex;
-        $patient->info->occupation     = $request->occupation;
-        $patient->info->home_address   = $request->home_address;
+        $information = new PatientInformation();
+        $information->nickname       = $request->nickname;
+        $information->birthdate      = $request->birthdate;
+        $information->martial_status = $request->martial_status;
+        $information->sex            = $request->sex;
+        $information->occupation     = $request->occupation;
+        $information->home_address   = $request->home_address;
 
 
         $patient->name      = $request->name;
@@ -79,7 +79,12 @@ class PatientController extends Controller
             $patient->password = $request->password;
         }
         
-        $patient->push();
+        if (!is_null($patient->info)) {
+            $patient->info->delete();    
+        }
+        
+        $patient->info()->save($information);
+        
 
         return back()->with('success', 'Succesfully update your profile.');
     }
