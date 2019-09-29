@@ -30,9 +30,10 @@ class AdminController extends Controller
         /* start service for chart */
         $serviceNames = Service::orderBy('id', 'ASC')->pluck('name')->toJson();
         $appointmentsByService = Appointment::orderBy('service_id', 'ASC')->pluck('service_id');
-        $s = array_values($appointmentsByService->countBy()->toArray());
-        $noValues = array_fill(count($s) - 1, $services , 0);
-        $serviceReport = json_encode($s + $noValues); // Equivalent to push or concat
+        $serviceWithValues = array_values($appointmentsByService->countBy()->toArray());
+        $start = ((count($serviceWithValues) - 1) < 0) ? 0 : (count($serviceWithValues) - 1);
+        $noValues = array_fill($start, $services , 0);
+        $serviceReport = json_encode($serviceWithValues + $noValues); // Equivalent to push or concat
         /* end of start service for chart */
         
         $appointments = Doctor::whereHas('appointments', function ($query) {

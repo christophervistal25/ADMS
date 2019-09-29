@@ -375,18 +375,22 @@
                           <input type="hidden" name="teeths[numbers][${index}]"  value="${tooth.tooth_number}"/>
                           <input type="hidden" name="teeths[descriptions][${index}]"  value="${tooth.tooth_description}"/>
                         
-                          <div class="col-lg-4">
+                          <div class="col-lg-4 col-sm-12 col-xs-12">
                             <div class="form-group">
                                   <input type="text" name="teeths[treatments][${index}]" data-key="treatment-${tooth.tooth_number}"  class="form-control" placeholder="Enter treatment" value="${tooth.treatment}"/>
                             </div>
                           </div>
 
-                          <div class="col-lg-4">
-                                  <input type="text" name="teeths[surfaces][${index}]" data-key="surface-${tooth.tooth_number}"  class="form-control" placeholder="Enter surface" value="${tooth.surface}"/>
+                          <div class="col-lg-4 col-sm-12 col-xs-12">
+                              <div class="form-group">
+                                   <input type="text" name="teeths[surfaces][${index}]" data-key="surface-${tooth.tooth_number}"  class="form-control" placeholder="Enter surface" value="${tooth.surface}"/>
+                              </div>
                           </div>
 
-                          <div class="col-lg-4">
-                                  <input type="text" name="teeths[statuses][${index}]" data-key="status-${tooth.tooth_number}" class="form-control" placeholder="Enter status" value="${tooth.status}" />
+                          <div class="col-lg-4 col-sm-12 col-xs-12">
+                              <div class="form-group">
+                                <input type="text" name="teeths[statuses][${index}]" data-key="status-${tooth.tooth_number}" class="form-control" placeholder="Enter status" value="${tooth.status}" />
+                              </div>
                           </div>
                     </div>
                 </div>

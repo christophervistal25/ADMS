@@ -26,7 +26,7 @@
       </div>
       <div class="x_content">
         <div class="pull-right">
-            <button type="submit" class="btn btn-primary" id="btnPrintSelectedRecord">PRINT</button>  
+            <button type="submit" class="btn btn-primary" disabled id="btnPrintSelectedRecord">PRINT</button>  
         </div>
         <div class="clearfix"></div>
         <table class="table table-striped table-bordered jambo_table " id="datatable">
@@ -88,18 +88,29 @@
        $('.child-checkbox').each(function (e) {
           $(this).prop('checked', state);
        });
+       hasCheck();
   });
 
   $('label[for="select-all-record"]').click(() => false);
 
+  function hasCheck()
+  {
+    if ($('.child-checkbox:checked').length !== 0) {
+      $('#btnPrintSelectedRecord').prop('disabled', false);
+    } else {
+      $('#btnPrintSelectedRecord').prop('disabled', true);
+      $('#select-all-record').prop('checked', false);
+    }
+  }
 
   $('tr.record-row').click(function () {
       let recordId = $(this).attr('data-key');
       if (!$(`#select-${recordId}`).prop('checked')) {
-          $(`#select-${recordId}`).prop('checked', true);
+          $(`#select-${recordId}`).prop('checked', true);  
       } else {
           $(`#select-${recordId}`).prop('checked', false);
       }
+      hasCheck();
   });
 
   $('#btnPrintSelectedRecord').click(function () {
@@ -110,7 +121,11 @@
               params += `record[]=${(checkbox.attr('data-key'))}`;
           }
       });
-      window.location.href = `/admin/patient/examination/history/print/${params}`;
+      if (params == "") {
+          window.location.reload();
+      } else {
+        window.location.href = `/admin/patient/examination/history/print/${params}`;
+      }
   });
 </script>
 @endpush

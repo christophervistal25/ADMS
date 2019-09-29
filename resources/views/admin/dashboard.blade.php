@@ -89,7 +89,7 @@
 <script>
   let services = $('meta[name="services"]').attr('content');
   let serviceValues = $('meta[name="serviceReport"]').attr('content');
-
+  console.log(serviceValues);
   let pieChart = $('#myChart');
   var myChart = new Chart(pieChart, {
     type: 'doughnut',
