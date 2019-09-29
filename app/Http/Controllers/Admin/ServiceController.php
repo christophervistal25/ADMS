@@ -91,7 +91,7 @@ class ServiceController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:services,name,' . $service->id,
             'price' => 'required',
-            'per_each' => [Rule::in([0, 1])],
+            'per_each' => [Rule::in(['true', 'false'])],
             'duration' => [Rule::in([1,2,3,4])],
         ]);
 
