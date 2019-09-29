@@ -9,6 +9,13 @@
       .tooth-chart {
         width: 450px;
       }
+
+      /* On screens that are 1900px or less, set the background color to olive */
+    @media screen and (max-width: 1900px) {
+      .tooth-chart {
+        width : auto;
+      }
+    }
   </style>
 
   @endprepend
@@ -70,10 +77,10 @@
 
                             <div role="tabpanel" class="tab-pane fade " id="tab_content1" aria-labelledby="home-tab">
                               <div class="row">
-                                  <div class="col-lg-6">
+                                  <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                       @include('templates.adult-tooth-chart')
                                   </div>
-                                  <div class="col-lg-6">
+                                  <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                                       <table class="table table-bordered table-responsive">
                                         <thead>
                                           <tr>
@@ -101,28 +108,28 @@
                             </div>
 
                             <div role="tabpanel" class="tab-pane fade active in" id="tab_content2" aria-labelledby="profile-tab">
-                                  <div class="col-lg-6">
+                                  <div class="col-lg-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                               <label for="occlusion">Occulusion</label>
                                               <textarea readonly name="occlusion" id="occlusion" cols="30" rows="2" class="form-control">{{ $record->occlusion }}</textarea>    
                                             </div>
                                           </div>
 
-                                          <div class="col-lg-6">
+                                          <div class="col-lg-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                               <label for="periodontal_condition">Periodontal Condtion</label>
                                               <input readonly type="text" name="periodontal_condition" id="periodontal_condition" class="form-control" value=" {{ $record->periodontal_condition }}">
                                             </div>
                                           </div>
 
-                                          <div class="col-lg-6">
+                                          <div class="col-lg-6 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                               <label for="oral_hygiene">Oral Hygiene</label>
                                               <input readonly type="text" name="oral_hygiene" id="oral_hygiene" class="form-control" value="{{ $record->oral_hygiene }}">
                                             </div>
                                           </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                                 <input onclick="return {{ $record->denture_upper === 1 ? "false;" : '' }}" type="checkbox" {{ $record->denture_upper === 1 ? 'checked' : 'disabled' }} name="denture_upper" id="denture_upper">
                                                 <label for="denture_upper">Denture Upper</label>
@@ -130,7 +137,7 @@
                                               </div>
                                          </div>
 
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 col-sm-12 col-xs-12">
                                               <input onclick="return {{ $record->denture_lower === 1 ? "false;" : '' }}" type="checkbox" {{ $record->denture_lower === 1 ? 'checked' : 'disabled' }} name="denture_lower" id="denture_lower">
                                                 <label for="denture_lower">Denture Lower</label>
                                                <input {{ $record->denture_lower === 1 ? 'readonly' : 'disabled' }} type="number" name="denture_lower_since" id="denture_lower_since" class="form-control" placeholder="Enter denture lower since" value="{{ $record->denture_lower_since }}">
@@ -138,63 +145,63 @@
 
                                          <p>&nbsp;</p>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                             <div class="form-group">
                                               <label for="abnormalities">Abnormalities</label>
                                               <input readonly type="text" name="abnormalities" id="abnormalities" class="form-control" value="{{ $record->abnormalities }}">
                                             </div>
                                          </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="general_condition">General Condition</label>
                                               <input readonly type="text" name="general_condition" id="general_condition" class="form-control" value="{{ $record->general_condition }}">
                                            </div>
                                          </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="physician">Physician</label>
                                               <input readonly type="text" name="physician" id="physician" class="form-control" value="{{ $record->physician }}">
                                            </div>
                                          </div>
 
-                                        <div class="col-lg-3">
+                                        <div class="col-lg-3 col-sm-12 col-xs-12">
                                           <div class="form-group">
                                               <label for="nature_of_treatment">Nature of Treatment</label>
                                               <input readonly type="text" name="nature_of_treatment" id="nature_of_treatment" class="form-control" value="{{ $record->nature_of_treatment }}">
                                           </div>
                                         </div>
                                         
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="allergies">Allergies</label>
                                               <input readonly type="text" name="allergies" id="allergies" class="form-control" value="{{ $record->allergies }}">
                                           </div>
                                          </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="previous_bleeding_history">Previous History of Bleeding</label>
                                               <input readonly type="text" name="previous_bleeding_history" id="previous_bleeding_history" class="form-control" value="{{ $record->history_bleeding }}">
                                          </div>
                                          </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="chronic_ailment">Chronic Ailment</label>
                                               <input readonly type="text" name="chronic_ailment" id="chronic_ailment" class="form-control" value="{{ $record->chronic_ailment }}">
                                          </div>
                                          </div>
 
-                                         <div class="col-lg-3">
+                                         <div class="col-lg-3 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="blood_pressure">Blood Pressure</label>
                                               <input readonly type="text" name="blood_pressure" id="blood_pressure" class="form-control" value="{{ $record->blood_pressure }}">
                                             </div>
                                          </div>
 
-                                         <div class="col-lg-6">
+                                         <div class="col-lg-6 col-sm-12 col-xs-12">
                                            <div class="form-group">
                                               <label for="drugs_taken">Drugs Being Taken</label>
                                               <input readonly type="text" name="drugs_taken" id="drugs_taken" class="form-control" value="{{ $record->drugs_taken }}">
@@ -237,12 +244,6 @@
         });
     });
 
-    $(document).click(function (e) {
-        let target = $(e.target);
-        if (target.attr('role') === 'tab') {
-            console.log(target.attr('href'));
-        }
-    });
 
   </script>
   @endpush

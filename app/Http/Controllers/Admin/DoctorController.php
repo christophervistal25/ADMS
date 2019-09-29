@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Patient;
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class DoctorController extends Controller
 {
@@ -89,8 +90,9 @@ class DoctorController extends Controller
         $this->validate($request, [
             'fullname' => 'required',
             'title'    => 'required',
+            'active'   => ['required', Rule::in(['active', 'in-active'])],
         ]);
-
+        
         $update = $doctor->update($request->all());
         return response()->json(['success' => $update, 'doctor' => $doctor]);
     }

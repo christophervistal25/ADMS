@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Patient;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class PatientLoginController extends Controller
 {
@@ -24,6 +26,10 @@ class PatientLoginController extends Controller
 
     public function loginPatient(Request $request)
     {
+      $patient = Patient::where('email', $request->email)->first();
+      if (is_null($patient->password)) {
+          return redirect()->route('password.request', ['email' => $patient->email]);
+      }
       // Attempt to log the user in
       if (Auth::guard('patient')->attempt(['email' => $request->email, 'password' => $request->password])) {
           // if successful, then redirect to their intended location

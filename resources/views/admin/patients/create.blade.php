@@ -10,7 +10,7 @@
             @if(Session::has('success'))
               <div class="alert alert-success" role="alert">
                   {{ Session::get('success') }}
-                  <span style="color:white;">do you want to add <b>Examination Record Chart</b> for this patient? <a href="{{ route('patient.examination.record.create', [Session::get('patient_id') ]) }}" style=" color :white;text-decoration: underline;">(click this underlined text)</a></span>
+                  <span style="color:white;">his/her patient number is <strong>{{ Session::get('patient_no') }}</strong> do you want to add <b>Examination Record Chart?</b> <a href="{{ route('patient.examination.record.create', [Session::get('patient_id') ]) }}" style=" color :white;text-decoration: underline;">(click this underlined text)</a></span>
               </div>
               @else
                 @include('templates.error')
@@ -35,7 +35,7 @@
                     <input type="text" class="form-control" id="mobile" name="mobile_no" value="{{ old('mobile_no') }}">
                   </div>
 
-                  <div class="form-group">
+                  {{-- <div class="form-group">
                     <label for="password">Password <span class="text-danger">*</span></label>
                     <input type="password" class="form-control" name="password" id="password">
                   </div>
@@ -43,7 +43,7 @@
                   <div class="form-group">
                     <label for="passwordConfirmation">Confirm Password <span class="text-danger">*</span></label>
                     <input type="password" class="form-control" id="passwordConfirmation" name="password_confirmation">
-                  </div>
+                  </div> --}}
 
                   <div class="form-group">
                     <label for="nickname">Nickname <span class="text-danger">*</span></label>

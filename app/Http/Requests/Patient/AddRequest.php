@@ -30,7 +30,7 @@ class AddRequest extends FormRequest
               'name'           => 'required',
               'email'          => 'required|unique:patients',
               'mobile_no'      => 'required|unique:patients',
-              'password'       => 'required|min:8|max:20|confirmed',
+              // 'password'       => 'required|min:8|max:20|confirmed',
               'nickname'       => 'required',
               'birthdate'      => 'date',
               'martial_status' => ['required', Rule::in($martial_status)],

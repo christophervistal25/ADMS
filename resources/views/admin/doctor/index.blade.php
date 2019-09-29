@@ -94,6 +94,14 @@
                 <label for="title">Title</label>
                 <input type="text" id="title" class="form-control" name="title">
             </div>
+
+            <div class="form-group">
+                <label for="active">Active</label>
+                <select name="active" id="active" class="form-control">
+                    <option value="active">Active</option>
+                    <option value="in-active">In-active</option>
+                </select>
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

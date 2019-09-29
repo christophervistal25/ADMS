@@ -109,6 +109,7 @@
          todayHighlight: true,
          startDate: new Date(),
          minDate : new Date(),
+         daysOfWeekDisabled: [0, 7],
          disabledDates : closeDates,
     });
 

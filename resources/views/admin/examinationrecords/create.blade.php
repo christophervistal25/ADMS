@@ -11,7 +11,14 @@
       width: 450px;
     }
 
-    </style>
+    /* On screens that are 600px or less, set the background color to olive */
+    @media screen and (max-width: 1900px) {
+      .tooth-chart {
+        width : auto;
+      }
+    }
+
+</style>
 
     <style>
       .modal-body {
@@ -32,10 +39,10 @@
             <div class="x_content">
                  
                   <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         @include('templates.adult-tooth-chart')
                     </div>
-                    <div class="col-lg-3 text-center" style="height : 66vh; color :black;">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="height : auto; color :black;">
                           <ul id="toothInfo" style="text-align:  justify; list-style: none;">
                             <li data-key="1">1 - 3rd Molar (wisdom tooth)
                             <li data-key="2">2 - 2nd Molar (12-yr molar)
@@ -74,28 +81,28 @@
                     
                      
                     <form method="POST" id="examinationInfoForm">
-                         <div class="col-lg-6">
+                         <div class="col-lg-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="occlusion">Occulusion</label>
                               <textarea name="occlusion" id="occlusion"  class="form-control"></textarea>    
                             </div>
                           </div>
 
-                          <div class="col-lg-6">
+                          <div class="col-lg-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="periodontal_condition">Periodontal Condtion</label>
                               <input type="text" name="periodontal_condition" id="periodontal_condition" class="form-control">
                             </div>
                           </div>
 
-                          <div class="col-lg-6">
+                          <div class="col-lg-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="oral_hygiene">Oral Hygiene</label>
                               <input type="text" name="oral_hygiene" id="oral_hygiene" class="form-control">
                             </div>
                           </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                                 <input type="checkbox" name="denture_upper" id="denture_upper">
                                 <label for="denture_upper">Denture Upper</label>
@@ -103,7 +110,7 @@
                               </div>
                          </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 col-sm-12 col-xs-12">
                               <input type="checkbox" name="denture_lower" id="denture_lower">
                                 <label for="denture_lower">Denture Lower</label>
                                <input disabled type="number" name="denture_lower_since" id="denture_lower_since" class="form-control" placeholder="Enter denture lower since">
@@ -111,73 +118,72 @@
 
                          <p>&nbsp;</p>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="abnormalities">Abnormalities</label>
                               <input type="text" name="abnormalities" id="abnormalities" class="form-control">
                             </div>
                          </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="general_condition">General Condition</label>
                               <input type="text" name="general_condition" id="general_condition" class="form-control">
                            </div>
                          </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="physician">Physician</label>
                               <input type="text" name="physician" id="physician" class="form-control">
                            </div>
                          </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 col-sm-12 col-xs-12">
                           <div class="form-group">
                               <label for="nature_of_treatment">Nature of Treatment</label>
                               <input type="text" name="nature_of_treatment" id="nature_of_treatment" class="form-control">
                           </div>
                         </div>
                         
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="allergies">Allergies</label>
                               <input type="text" name="allergies" id="allergies" class="form-control">
                           </div>
                          </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="previous_bleeding_history">Previous History of Bleeding</label>
                               <input type="text" name="previous_bleeding_history" id="previous_bleeding_history" class="form-control">
                          </div>
                          </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-6 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="chronic_ailment">Chronic Ailment</label>
                               <input type="text" name="chronic_ailment" id="chronic_ailment" class="form-control">
                          </div>
                          </div>
 
-                         <div class="col-lg-3">
+                         <div class="col-lg-6 col-sm-12 col-xs-12">
+                          
                            <div class="form-group">
                               <label for="blood_pressure">Blood Pressure</label>
                               <input type="text" name="blood_pressure" id="blood_pressure" class="form-control">
                             </div>
-                         </div>
 
-                         <div class="col-lg-6">
-                           <div class="form-group">
+                             <div class="form-group">
                               <label for="drugs_taken">Drugs Being Taken</label>
                               <input type="text" name="drugs_taken" id="drugs_taken" class="form-control">
                            </div>
 
-                           <div class="pull-right">
+                            <div class="text-right">
                               <button type="button" class="btn btn-default" id="addTeethDetails"><i class="fas fa-plus"></i> Add details for selected tooth</button>
                               <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add Examination Record</button>
                            </div>
-                           <div class="clearfix"></div>
+
                          </div>
                     </form>
                   </div>

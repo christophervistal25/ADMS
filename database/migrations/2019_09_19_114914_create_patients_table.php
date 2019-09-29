@@ -19,7 +19,7 @@ class CreatePatientsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('mobile_no')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('profile')->default('https://res.cloudinary.com/dpcxcsdiw/image/upload/v1568625802/qtw0flebtkxhcekaclwq.png');
             $table->rememberToken();
             $table->timestamps();

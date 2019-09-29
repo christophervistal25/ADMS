@@ -173,7 +173,7 @@
                             <span class=" fa fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
-                            <li><a href="javascript:;"><i class="fas fa-profile"></i> Profile</a></li>
+                            <li><a href="javascript:;"><i class="fas fa-profile"></i> Account Settings</a></li>
                             <li>
                               <a href="{{ route('admin.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                               <i class="fa fa-sign-out pull-right"></i>Logout</a>

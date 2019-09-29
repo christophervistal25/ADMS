@@ -64,8 +64,9 @@ class PatientController extends Controller
             $patient->mobile_no          = $request->mobile_no;
             $patient->info()->save($information);
             DB::commit();
-            return back()->with('success', 'Succesfully add new patient')->with('patient_id', $patient->id);
+            return back()->with('success', 'Succesfully add new patient')->with('patient_id', $patient->id)->with('patient_no', $patient->patient_number);
          } catch (Exception $e) {
+            dd($e->getMessage());
             DB::rollback();
          }
      

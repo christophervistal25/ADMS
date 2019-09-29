@@ -6,6 +6,7 @@ use App\Patient;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class Patient extends Authenticatable 
 {
@@ -43,7 +44,7 @@ class Patient extends Authenticatable
         parent::boot();
         self::creating(function(Patient $patient) {
             $patientCount = Patient::count();
-            $patient->patient_number = 'PN' . '-' . date('Y') .  '-' . ++$patientCount;
+            $patient->patient_number = 'PN' . '-' . date('Y') .  '-' . ++$patientCount .  Str::before((string) Str::uuid(), '-');;
             return true;
         });
     }
