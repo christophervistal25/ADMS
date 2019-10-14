@@ -7,20 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class CloseDay extends Model
 {
+    public const MAX_HOURS_PER_DAY = 8;
     protected $fillable = ['start', 'end', 'all_day'];
     public $dates       = ['start', 'end'];
 
 
 
-  /*public function getStartAttribute($value)
-  {
-    return Carbon::parse($value)->format('m/d/Y h:i A');
-  }
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function(CloseDay $close) {
+            $close->all_day = $close->isAllDay($close->start, $close->end);
+            return true;
+        });
 
-  public function getEndAttribute($value)
+        self::updating(function(CloseDay $close) {
+            $close->all_day = $close->isAllDay($close->start, $close->end);
+            return true;
+        });
+
+    }
+
+  public function isAllDay(Carbon $start, Carbon $end)
   {
-    return Carbon::parse($value)->format('m/d/Y h:i A');
-  }*/
+    return ($end->diffInHours($start) - 1) >= self::MAX_HOURS_PER_DAY ? 1 : 0;
+  }
 
 	public static function allDay()
 	{

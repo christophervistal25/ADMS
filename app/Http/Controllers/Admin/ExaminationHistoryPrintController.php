@@ -23,6 +23,5 @@ class ExaminationHistoryPrintController extends Controller
         $pdf->getDomPDF()->set_option("enable_php", true);
     	$pdf->loadView('admin.examinationrecords.print', compact('records'));
 		return $pdf->stream();
-    	
     }
 }

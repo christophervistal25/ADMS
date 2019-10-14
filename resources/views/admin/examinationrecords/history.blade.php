@@ -37,7 +37,7 @@
                     <td>Tooth</td>
                     <td>Surface</td>
                     <td>Treatment Rendered</td>
-                    <td>Free</td>
+                    <td>Fee</td>
                     <td>Paid</td>
                     <td>Balance</td>
                     <td>Actions</td>
@@ -54,9 +54,9 @@
                   <td class="text-center"><strong>{{ $record->teeths->pluck('surface')->implode(', ') }}</strong></td>
                   <td class="text-center"><strong>{{ $record->teeths->pluck('treatment')->implode(', ') }}</strong>
                   </td>
-                  <td>(Free)</td>
-                  <td>(Paid)</td>
-                  <td>(Balance)</td>
+                  <td class="text-center font-weight-bold">{{ $record->payments->fee }}</td>
+                  <td class="text-center font-weight-bold">{{ $record->payments->paid }}</td>
+                  <td class="text-center font-weight-bold">{{ $record->payments->fee -  $record->payments->paid }}</td>
                  <th class="text-center">
                     @if(!$record->isOneDay())
                     <a href="{{ route('patient.examination.edit', $record) }}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Edit</a>

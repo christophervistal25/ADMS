@@ -25,6 +25,9 @@
                     <b>NOTE: Please select Service & Doctor first.</b>
                   </div>
                     <form id="setAppointmentForm">
+                    <div class="form-group col-lg-12 text-right">
+                          <input type="button" id="btnResetForm" value="Reset" class="btn btn-primary">
+                    </div>
                     <div class="form-group col-lg-6">
                       <label for="services">Select service</label>
                       <select name="service_id" id="services" class="form-control">
@@ -115,6 +118,10 @@
 
     $('#datetimepicker1').find('input').prop('disabled', true);
 
+    $('#btnResetForm').click(function (e) {
+        $('#setAppointmentForm')[0].reset();
+        $('#vacants').html('');
+    });
 
     function alreadySelectATime(e)
     {
@@ -155,7 +162,6 @@
                               null,
                               '[)'
                         );
-
                       if (!betweenCloseTime) {
                         vacants += `  <tr>
                               <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>

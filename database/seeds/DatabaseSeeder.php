@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
             AccountsSeeder::class,
             DoctorSeeder::class,
             ServiceSeeder::class,
-            CloseDaysSeeder::class,
-            // AppointmentSeeder::class,
+            // CloseDaysSeeder::class,
+            AppointmentSeeder::class,
             // ExaminationRecordSeeder::class,
         ]);
     }

@@ -36,10 +36,10 @@ class AppointmentController extends Controller
                     ->orderBy('start_date', 'ASC')
                     ->get(['start_date', 'end_date']);
 
-        $closeByTime = CloseDay::byTime($month, $day);
+        $timeClose = CloseDay::byTime($month, $day);
         $availables = $this->appointmentRepo->findAvailableFor($dates, $duration);
 
-        return response()->json(['availables' => $availables, 'time_close' => $closeByTime]);
+        return response()->json(['availables' => $availables, 'time_close' => $timeClose]);
     }
     
     /**

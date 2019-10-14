@@ -91,7 +91,7 @@ class PatientExaminationRecordController extends Controller
             }
             $examination->teeths()->saveMany($teeths);
             DB::commit();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'examination_id' => $examination->id, 'no_of_tooths' => count($request->teeths['numbers']) ]);
          } catch (Exception $e) {
             return response()->json(['success' => false]);
             DB::rollback();

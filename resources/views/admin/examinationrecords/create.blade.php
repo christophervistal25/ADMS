@@ -462,8 +462,7 @@
             success : function (response) {
               if (response.success) {
                   session.clear();
-                  alert('Succesfully add examination record for this patient..');
-                  window.location.reload();
+                  window.location.href = `/admin/examination/${response.examination_id}/${response.no_of_tooths}/payment`;
               }
             },
             error : function (response) {

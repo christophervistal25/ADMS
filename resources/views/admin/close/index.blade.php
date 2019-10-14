@@ -12,8 +12,9 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2></h2>
-        <div class="clearfix"></div>
+      {{--   <div class="alert alert-danger">
+          <strong><span style="color:white;">NOTE: You can only set a maximum of 12 hours close</span></strong>
+        </div> --}}
       </div>
       <div class="x_content">
         <div class="pull-right">
@@ -32,7 +33,7 @@
           <tbody>
             @foreach($dates as $date)
               <tr>
-                <td class="text-center"><b>{{ $date->start->format('l jS \\of F h:i A') }} to {{ $date->end->format('h:i A - Y') }}</b></td>
+                <td class="text-center"><b>{{ $date->start->format('m-d-Y h:i A') }} to {{ $date->end->format('m-d-Y h:i A') }}</b></td>
                 <td class="text-center">
                   @if($date->all_day)
                         <span class="badge">YES</span>

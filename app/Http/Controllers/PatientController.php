@@ -44,7 +44,7 @@ class PatientController extends Controller
             'sex'            => ['required',Rule::in(['Women', 'Men', 'Choose not to say'])],
             'occupation'     => 'required',
             'home_address'   => 'required',
-            'profile'       => 'nullable',
+            'profile'        => 'nullable',
         ];
 
 

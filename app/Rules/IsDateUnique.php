@@ -40,6 +40,6 @@ class IsDateUnique implements Rule
      */
     public function message()
     {
-        return ucfirst($this->attribute) . ' date must be unique.';
+        return ucfirst($this->attribute) . ' date must be unique please kindly check all close days to verify your request.';
     }
 }

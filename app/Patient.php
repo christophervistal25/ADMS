@@ -39,7 +39,7 @@ class Patient extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     public static function boot()
+    public static function boot()
     {
         parent::boot();
         self::creating(function(Patient $patient) {

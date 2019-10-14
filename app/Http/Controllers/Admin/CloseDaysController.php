@@ -27,7 +27,7 @@ class CloseDaysController extends Controller
      */
     public function index()
     {
-        $dates = CloseDay::all();
+        $dates = CloseDay::get();
         return view('admin.close.index', compact('dates'));
     }
 
@@ -51,28 +51,24 @@ class CloseDaysController extends Controller
     {
         $start   = Carbon::parse($request->start);
         $end     = Carbon::parse($request->end);
-        $validator = Validator::make([], []); 
+        $validator = Validator::make([], []);
 
         request()->validate([
             'start' => ['date', new IsDateUnique($start), 'before:end'],
             'end'   => ['date',  new IsDateUnique($end), 'after:start'],
         ]);
 
-        if (CloseDay::whereTime('start', '<=', $start)->whereTime('end','>=', $end)->exists()) {
-            $validator->errors()->add('in_between', 'Two dates are in between of other dates');
-        }
+        if ($this->closeDayRepo->hasDateRange($start, $end) > 0) {
+            $this->closeDayRepo->insertAllDatesFromRange($start, $end);
+        } else {
+            if ($this->closeDayRepo->dateIsInRange($start, $end)) {
+                $validator->errors()->add('in_between', 'Two dates are in between of other dates');
+                throw new ValidationException($validator);
+            }
 
-        if (count($validator->errors()->messages()) > 0) {
-            throw new ValidationException($validator);
+            $this->closeDayRepo->addCloseDay(['start' => $start, 'end' => $end]);
         }
-
-        $all_day = $this->closeDayRepo->isAllDay($start, $end);
         
-        CloseDay::create([
-            'start'   => $start,
-            'end'     => $end,
-            'all_day' => $all_day,
-        ]);
         return response()->json(['success' => true]);
     }
 
@@ -105,7 +101,7 @@ class CloseDaysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CloseDay $close)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'start' => 'date',
@@ -114,12 +110,10 @@ class CloseDaysController extends Controller
 
         $start = Carbon::parse($request->start);
         $end = Carbon::parse($request->end);
-        $all_day = $this->closeDayRepo->isAllDay($start, $end);
 
-        $updated = $close->update([
+        $updated = CloseDay::find($id)->update([
             'start'   => $start,
             'end'     => $end,
-            'all_day' => $all_day
         ]);
 
         

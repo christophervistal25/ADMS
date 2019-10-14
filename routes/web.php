@@ -40,6 +40,9 @@ Route::group(['prefix' => 'admin'] , function () {
     Route::put('/patient/examination/edit/{patient}', 'Admin\PatientExaminationRecordController@update')
           ->name('patient.examination.update');
 
+    Route::get('/examination/{id}/{noOfTooth}/payment', 'Admin\ExaminationPaymentController@edit');
+    Route::put('/examination/{id}/payment', 'Admin\ExaminationPaymentController@update');
+
     Route::get('/patient/examination/history/print/{ids}', 'Admin\ExaminationHistoryPrintController@print');
 
     Route::resource('close', 'Admin\CloseDaysController');
