@@ -23,7 +23,6 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        dd('Note that the postgresql boolean datatype is different than mysql');
         $services = $this->service->all();
         return view('admin.services.index', compact('services'));
     }
