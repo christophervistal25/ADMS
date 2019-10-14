@@ -29,7 +29,7 @@
             <th class="center">Tooth</th>
             <th class="center">Surface</th>
             <th class="center">Treatment Record</th>
-            <th class="center">Free</th>
+            <th class="center">Fee</th>
             <th class="center">Paid</th>
             <th class="center">Balance</th>
           </tr>
@@ -41,9 +41,9 @@
                   <td class="center">{{ $record->teeths->pluck('tooth_description')->implode(', ') }}</td>
                   <td class="center">{{ $record->teeths->pluck('surface')->implode(', ') }}</td>
                   <td class="center">{{ $record->teeths->pluck('treatment')->implode(', ') }}</td>
-                  <td class="center">(Free)</td>
-                  <td class="center">(Paid)</td>
-                  <td class="center">(Balance)</td>
+                  <td class="center">{{ $record->payments->fee }}</td>
+                  <td class="center">{{ $record->payments->paid }}</td>
+                  <td class="center">{{ $record->payments->fee -  $record->payments->paid }}</td>
           </tr>
           @endforeach
         </tbody>
