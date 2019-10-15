@@ -16,7 +16,7 @@ class AccountsSeeder extends Seeder
     public function run()
     {
         $patient = Patient::create([
-            'name' => 'Christopher Vistal',
+            'name' => 'John Doe',
             'email' => 'christophervistal26@gmail.com',
             'password' => 1234,
             'mobile_no' => '09193693499'
@@ -24,7 +24,7 @@ class AccountsSeeder extends Seeder
 
         PatientInformation::create([
             'patient_id'     => $patient->id,
-            'nickname'       => 'Balong',
+            'nickname'       => 'User',
             'birthdate'      => '1997-01-06 18:04:00',
             'martial_status' => 'Single',
             'sex'            => 'Men',
@@ -34,9 +34,9 @@ class AccountsSeeder extends Seeder
 
     
         Admin::create([
-            'name' => 'Administrator Vistal',
+            'name' => 'Administrator Apit',
             'email' => 'admin@yahoo.com',
-            'password' => 1234,
+            'password' => 'qwerty12345',
         ]);
     }
 }
