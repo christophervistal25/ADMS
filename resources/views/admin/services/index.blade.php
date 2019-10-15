@@ -37,7 +37,7 @@
                 <td class="text-center"><b>{{ $service->duration }}</b></td>
                 <td class="text-center">
                   <button class="btn btn-success btn-sm btn-edit-service" data-src="{{ $service }}"><i class="fa fa-edit"></i></button> 
-                  <button class="btn btn-danger btn-sm btn-delete-service" data-src="{{ $service }}"><i class="fa fa-trash"></i></button>
+                  {{-- <button class="btn btn-danger btn-sm btn-delete-service" data-src="{{ $service }}"><i class="fa fa-trash"></i></button> --}}
                 </td>
               </tr>
             @endforeach
