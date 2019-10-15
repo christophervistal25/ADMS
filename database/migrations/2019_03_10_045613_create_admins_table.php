@@ -18,7 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('profile')->default('https://res.cloudinary.com/dpcxcsdiw/image/upload/v1568625802/qtw0flebtkxhcekaclwq.png');
+            $table->string('profile')->default('https://res.cloudinary.com/dpcxcsdiw/image/upload/v1571158607/adms/72319625_604081863459081_4710410772348403712_n.jpg');
             $table->rememberToken();
             $table->timestamps();
         });
