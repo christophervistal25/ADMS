@@ -16,11 +16,11 @@ class DoctorAppointmentResource extends JsonResource
     public function toArray($request)
     {
         $service = $this->service;
-        $patient = $service->appointment->patients[0];
+        $patient = $this->patients[0];
 
         return [
             'id'        => $this->id,
-            'title'     => $this->service->name . ' - ' . $patient->name . '(' . $patient->patient_number . ')',
+            'title'     => $this->service->name . ' - ' . $patient->name . '(' . $patient->patient_number . ')' ,
             'start'     => $this->start_date->format('Y-m-d H:i:s'),
             'end'       => $this->end_date->format('Y-m-d H:i:s'),
             'service'   => [

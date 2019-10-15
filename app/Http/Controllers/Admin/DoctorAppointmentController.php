@@ -79,8 +79,12 @@ class DoctorAppointmentController extends Controller
      */
     public function show(int $id)
     {
-        $doctor = Doctor::with(['appointments'])->find($id);
-        $appointments = DoctorAppointmentResource::collection($doctor->appointments);
+        // $doctor = Doctor::with(['appointments'])->find($id);
+        // $appointments = DoctorAppointmentResource::collection($doctor->appointments);
+        $appointments = Appointment::with(['service', 'doctor' => function ($query) use ($id ){
+            $query->where('id', $id);
+        }, 'patients'])->get();
+        $appointments = DoctorAppointmentResource::collection($appointments);
         return response()->json($appointments);
     }
 
