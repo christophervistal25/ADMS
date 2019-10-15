@@ -1,5 +1,5 @@
 @extends('templates.dashboard-template')
-@section('title', 'Receipt for ' . $examination->patient->name)
+@section('title', '')
 @section('content')
 @prepend('meta')
 	<meta name="noOfTooth" content="{{ $noOfTooth }}">
@@ -9,12 +9,16 @@
 <div class="row">
       <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-          <div class="x_title">
-          	<h3>Official Receipt</h3>
-            <div class="clearfix"></div>
-          </div>
+          {{-- <div class="x_title"> --}}
+          	{{-- <h3>Official Receipt</h3> --}}
+            {{-- <div class="clearfix"></div> --}}
+          {{-- </div> --}}
             <div class="x_content">
-              	<form action="/admin/examination/{{$examination->id}}/payment" method="POST">
+            	<div class="spinner-border text-primary text-center" role="status">
+					<i class="fa fa-spinner fa-spin" style="font-size:50px"></i>
+					<h5>Generating receipt please wait...</h5>
+				</div>
+              	<form action="/admin/examination/{{$examination->id}}/payment" method="POST" class="hide">
               		@csrf
               		@method('PUT')
               		 <div class="row">
@@ -53,7 +57,7 @@
               		 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               		 		<div class="form-group">
 			                    <label for="address">Address</label>
-			                    <input type="text" class="form-control" id="address" name="address">
+			                    <input type="text" class="form-control" id="address" name="address" value="{{ $examination->patient->info->home_address }}">
 			                 </div>
               		 	</div>
 
@@ -89,10 +93,7 @@
 	              		 		<div class="form-group">
 	              		 			<label for="service_rendered">Service Rendered</label>
 				                    <select name="service_rendered" id="service_rendered" required class="form-control">
-									  <option value="" disabled selected hidden>Choose service</option>
-									  @foreach($services as $service)
 									  <option value="{{ $service->name }}" data-price="{{ $service->price }}" data-pereach="{{ $service->per_each }}">{{ $service->name }}</option>
-									  @endforeach
 									</select>
 				                 </div>
 	              		 	</div>
@@ -107,12 +108,12 @@
 	              		 	<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 	              		 		<div class="form-group">
 	              		 			<label for="fee">Fee</label>
-				                    <input required type="number" name="fee" class="form-control" >
+				                    <input required type="number" id="fee" name="fee" class="form-control" >
 				                 </div>
 	              		 	</div>
               		 </div>
 					<div class="pull-right">
-						<input type="submit" value="Generate Receipt" class="btn btn-primary">
+						<input type="submit" value="Generate Receipt" id="btnGenerateReceipt" class="btn btn-primary">
 					</div>
 					<div class="clearfix"></div>
               	</form>
@@ -122,15 +123,23 @@
 </div>
 @push('page-scripts')
 <script>
+	$(document).ready(function () {
+		$('#service_rendered').trigger('change');
+	});
+
 	$('#service_rendered').change(function (e) {
 		let serviceFee       = $('#service_rendered option:selected').attr('data-price');
 		let noOfTooth        = $('meta[name="noOfTooth"]').attr('content');
 		let isServicePerEach =  $('#service_rendered option:selected').attr('data-pereach') == 1 ? true : false;
 		if (isServicePerEach) {
 			$('#service_amount').val(`${parseInt(serviceFee) * parseInt(noOfTooth)}.00`);
+			$('#fee').val(`${parseInt(serviceFee) * parseInt(noOfTooth)}.00`);
 		} else {
+			$('#fee').val(serviceFee);
 			$('#service_amount').val(serviceFee);
 		}
+
+		$('#btnGenerateReceipt').trigger('click');
 	});
 </script>
 @endpush

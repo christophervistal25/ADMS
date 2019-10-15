@@ -28,6 +28,7 @@ class AddRequest extends FormRequest
             'occlusion'                 => 'required',
             'periodontal_condition'     => 'required',
             'oral_hygiene'              => 'required',
+            'service_rendered'          => 'required',
             'abnormalities'             => 'required',
             'general_condition'         => 'required',
             'physician'                 => 'required',

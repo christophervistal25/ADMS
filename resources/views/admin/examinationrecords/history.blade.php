@@ -1,3 +1,4 @@
+@inject('service', 'App\Service')
 @extends('templates.dashboard-template')
 @section('title', $records->name  . ' Examination Records')
 @section('content')
@@ -59,9 +60,10 @@
                   <td class="text-center font-weight-bold">{{ $record->payments->fee -  $record->payments->paid }}</td>
                  <th class="text-center">
                     @if(!$record->isOneDay())
-                    <a href="{{ route('patient.examination.edit', $record) }}" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{{ route('patient.examination.edit', $record) }}" data-toggle="tooltip" title="Edit Record" class="btn btn-success btn-sm"><i class="fas fa-edit"></i> </a>
                     @endif
-                    <a href="{{ route('patient.examination.show', $record->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> View</a>
+                    <a href="{{ route('patient.examination.show', $record->id) }}" data-toggle="tooltip" title="View Record" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> </a>
+                    <a href="/admin/examination/{{$record->id}}/{{$record->teeths->pluck('id')->count() }}/{{$service::where('name',$record->payments->service_rendered)->first()->id}}/payment" data-toggle="tooltip" title="Generate Receipt" class="btn btn-info btn-sm"><i class="fas fa-receipt"></i> </a>
                  </th>
                 </tr>
             @endforeach
@@ -126,6 +128,9 @@
       } else {
         window.location.href = `/admin/patient/examination/history/print/${params}`;
       }
+  });
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
   });
 </script>
 @endpush

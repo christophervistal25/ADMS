@@ -183,6 +183,30 @@
                           </form>
                           </ul>
                         </li>
+                        <li role="presentation" class="dropdown">
+                          <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-envelope"></i>
+                            <span class="badge bg-green">{{ $noOfAppointmentsToday }}</span>
+                          </a>
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                            @foreach($appointmentsToday as $appointment)
+                              <li>
+                                <a>
+                                  <span class="image"><img src="{{ $appointment->patients[0]->profile }}"></span>
+                                  <span>
+                                    <span><b>{{ $appointment->patients[0]->name }}</b></span>
+                                    {{-- <span class="time">3 mins ago</span> --}}
+                                  </span>
+                                  <span class="message">
+                                    Have an appointment at <b>{{ $appointment->start_date->format('h:i:s A') }}</b> - <b>{{ $appointment->end_date->format('h:i:s A') }}</b> to {{ $appointment->doctor->title }} {{ $appointment->doctor->fullname }}
+                                  </span>
+                                </a>
+                              </li>
+                            @endforeach
+                            
+                              
+                            </ul>
+                          </li>
                       </ul>
                     </nav>
                   </div>

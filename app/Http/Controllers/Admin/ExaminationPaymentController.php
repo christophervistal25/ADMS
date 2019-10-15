@@ -63,11 +63,11 @@ class ExaminationPaymentController extends Controller
      * @param  No of tooth  $noOfTooth
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id, int $noOfTooth)
+    public function edit(int $id, int $noOfTooth, $service_rendered)
     {
         $examination = Examination::with('patient')->find($id);
-        $services = Service::get(['id', 'name', 'price', 'per_each']);
-        return view('admin.payment.create', compact('examination', 'noOfTooth', 'services'));
+        $service = Service::find($service_rendered);
+        return view('admin.payment.create', compact('examination', 'noOfTooth', 'service'));
     }
 
     /**

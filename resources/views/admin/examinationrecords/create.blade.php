@@ -88,19 +88,33 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                          <div class="col-lg-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="periodontal_condition">Periodontal Condtion</label>
                               <input type="text" name="periodontal_condition" id="periodontal_condition" class="form-control">
                             </div>
                           </div>
 
-                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                          <div class="col-lg-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="oral_hygiene">Oral Hygiene</label>
                               <input type="text" name="oral_hygiene" id="oral_hygiene" class="form-control">
                             </div>
                           </div>
+
+                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              <label for="service_rendered">Service Rendered</label>
+                              <select name="service_rendered" id="service_rendered" class="form-control" required>
+                                <option value="" disabled selected hidden>Choose service</option>
+                                  @foreach($services as $service)
+                                  <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                          </div>
+
+
 
                          <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
@@ -150,14 +164,14 @@
                            <div class="form-group">
                               <label for="allergies">Allergies</label>
                               <input type="text" name="allergies" id="allergies" class="form-control">
-                          </div>
+                            </div>
                          </div>
 
                          <div class="col-lg-3 col-sm-12 col-xs-12">
                            <div class="form-group">
                               <label for="previous_bleeding_history">Previous History of Bleeding</label>
                               <input type="text" name="previous_bleeding_history" id="previous_bleeding_history" class="form-control">
-                         </div>
+                            </div>
                          </div>
 
                          <div class="col-lg-6 col-sm-12 col-xs-12">
@@ -462,7 +476,7 @@
             success : function (response) {
               if (response.success) {
                   session.clear();
-                  window.location.href = `/admin/examination/${response.examination_id}/${response.no_of_tooths}/payment`;
+                  window.location.href = `/admin/examination/${response.examination_id}/${response.no_of_tooths}/${response.service_rendered}/payment`;
               }
             },
             error : function (response) {

@@ -20,9 +20,9 @@ class ServiceSeeder extends Seeder
     	]);
 
     	Service::create([
-    		'name' => 'Pasta',
+    		'name' => 'Extraction',
     		'price' => 700,
-    		'per_each' => 0,
+    		'per_each' => 1,
             'duration' => rand(1,4),
     	]);
 

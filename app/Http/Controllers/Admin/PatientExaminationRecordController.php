@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Examination\AddRequest;
 use App\Http\Requests\Examination\UpdateRequest;
 use App\Patient;
+use App\Service;
 use DB;
 use Exepction;
 use Illuminate\Http\Request;
@@ -47,7 +48,8 @@ class PatientExaminationRecordController extends Controller
      */
     public function create(Patient $patient)
     {
-        return view('admin.examinationrecords.create', compact('patient'));
+        $services = Service::all();
+        return view('admin.examinationrecords.create', compact('patient', 'services'));
     }
 
     /**
@@ -91,7 +93,7 @@ class PatientExaminationRecordController extends Controller
             }
             $examination->teeths()->saveMany($teeths);
             DB::commit();
-            return response()->json(['success' => true, 'examination_id' => $examination->id, 'no_of_tooths' => count($request->teeths['numbers']) ]);
+            return response()->json(['success' => true, 'examination_id' => $examination->id, 'no_of_tooths' => count($request->teeths['numbers']) , 'service_rendered' => $request->service_rendered]);
          } catch (Exception $e) {
             return response()->json(['success' => false]);
             DB::rollback();
@@ -118,8 +120,9 @@ class PatientExaminationRecordController extends Controller
      */
     public function edit($examinationId)
     {
-        $record = Examination::with(['teeths'])->find($examinationId);
-        return view('admin.examinationrecords.edit', compact('record'));
+        $services = Service::all();
+        $record = Examination::with(['teeths', 'payments'])->find($examinationId);
+        return view('admin.examinationrecords.edit', compact('record', 'services'));
     }
 
     /**
@@ -168,7 +171,7 @@ class PatientExaminationRecordController extends Controller
             $examination->teeths()->delete();
             $examination->teeths()->saveMany($teeths);
             DB::commit();
-            return response()->json(['success' => true]);
+            return response()->json(['success' => true, 'examination_id' => $examination->id, 'no_of_tooths' => count($request->teeths['numbers']) , 'service_rendered' => $request->service_rendered]);
          } catch (Exception $e) {
             return response()->json(['success' => false]);
             DB::rollback();

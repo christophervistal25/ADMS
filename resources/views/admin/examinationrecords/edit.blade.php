@@ -90,17 +90,29 @@
                             </div>
                           </div>
 
-                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                          <div class="col-lg-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="periodontal_condition">Periodontal Condtion</label>
                               <input type="text" name="periodontal_condition" id="periodontal_condition" class="form-control" value="{{ $record->periodontal_condition }}">
                             </div>
                           </div>
 
-                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                          <div class="col-lg-3 col-sm-12 col-xs-12">
                             <div class="form-group">
                               <label for="oral_hygiene">Oral Hygiene</label>
                               <input type="text" name="oral_hygiene" id="oral_hygiene" class="form-control" value="{{ $record->oral_hygiene }}">
+                            </div>
+                          </div>
+
+                          <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                              <label for="service_rendered">Service Rendered</label>
+                              <select name="service_rendered" id="service_rendered" class="form-control" required>
+                                <option value="" disabled selected hidden>Choose service</option>
+                                  @foreach($services as $service)
+                                  <option value="{{ $service->id }}" {{ $service->name == $record->payments->service_rendered ? 'selected' : '' }}>{{ $service->name }}</option>
+                                  @endforeach
+                              </select>
                             </div>
                           </div>
 
@@ -513,8 +525,13 @@ $('polygon, path').on('highlightEvent' , function (e) {
             if (response.success) {
                 session.removeItem('denture_upper_since');
                 session.removeItem('denture_lower_since');
-                alert('Succesfully update examination record .');
-                window.location.reload();
+                let confirmation = confirm('Succesfully update examination record are you want to generate an receipt ?');
+                if (confirmation) {
+                  window.location.href = `/admin/examination/${response.examination_id}/${response.no_of_tooths}/${response.service_rendered}/payment`; 
+                } else {
+                  alert('Succesfully update examination record');
+                  window.location.reload();
+                }
             }
           },
             error : function (response) {
