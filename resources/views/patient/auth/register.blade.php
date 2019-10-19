@@ -9,8 +9,16 @@
               @csrf
               <h1>Create Account</h1>
               <div>
-                <label for="fullname">Fullname</label>
-                <input type="text" id="fullname" name="name" class="form-control" placeholder="Fullname" value="{{ old('name') }}" />
+                <label for="firstname">Firstname</label>
+                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Firstname" value="{{ old('firstname') }}" />
+              </div>
+              <div>
+                <label for="middlename">Middlename</label>
+                <input type="text" id="middlename" name="middlename" class="form-control" placeholder="Middlename" value="{{ old('middlename') }}" />
+              </div>
+              <div>
+                <label for="lastname">Lastname</label>
+                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="lastname" value="{{ old('lastname') }}" />
               </div>
               <div>
                 <label for="emailAddress">Email Address</label>

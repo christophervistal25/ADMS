@@ -24,12 +24,13 @@ class PatientRegisterController extends Controller
     public function registerPatient(Request $request)
     {
         $this->validate($request, [
-            'name'      => 'required',
-            'email'     => 'required|unique:patients',
-            'mobile_no' => 'required|unique:patients',
-            'password' => 'required|min:8|max:20|confirmed',
+            'firstname'  => 'required',
+            'middlename' => 'required',
+            'lastname'   => 'required',
+            'email'      => 'required|unique:patients',
+            'mobile_no'  => 'required|unique:patients',
+            'password'   => 'required|min:8|max:20|confirmed',
         ]);
-
         $patient = $this->patient->create($request->all());
         Auth::guard('patient')->login($patient);
         return redirect()->intended(route('account.settings'));

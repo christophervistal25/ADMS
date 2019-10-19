@@ -17,7 +17,7 @@
                       </div>
                       <div class="profile_info">
                         <span>Welcome,</span>
-                        <h2>{{ Auth::user()->name }}</h2>
+                        <h2>{{ Auth::user()->firstname . ' ' . Auth::user()->middlename . ' ' . Auth::user()->lastname }}</h2>
                       </div>
                       <div class="clearfix"></div>
                     </div>
@@ -57,7 +57,7 @@
                       <ul class="nav navbar-nav navbar-right">
                         <li class="">
                           <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ Auth::user()->profile }}" alt="">{{ Auth::user()->name }}
+                            <img src="{{ Auth::user()->profile }}" alt="">{{ Auth::user()->firstname  . ' ' . Auth::user()->middlename . ' ' . Auth::user()->lastname }}
                             <span class=" fas fa-angle-down"></span>
                           </a>
                           <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -194,7 +194,7 @@
                                 <a>
                                   <span class="image"><img src="{{ $appointment->patients[0]->profile }}"></span>
                                   <span>
-                                    <span><b>{{ $appointment->patients[0]->name }}</b></span>
+                                    <span><b>{{ $appointment->patients[0]->firstname }} {{ $appointment->patients[0]->middlename }} {{ $appointment->patients[0]->lastname }}</b></span>
                                     {{-- <span class="time">3 mins ago</span> --}}
                                   </span>
                                   <span class="message">

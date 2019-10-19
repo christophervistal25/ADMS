@@ -27,7 +27,9 @@ class AddRequest extends FormRequest
         $martial_status = ['Married', 'Single', 'Divorced', 'Widowed'];
         $sex            = ['Women', 'Men', 'Choose not to say'];
         return [
-              'name'           => 'required',
+              'firstname'           => 'required',
+              'middlename'           => 'required',
+              'lastname'           => 'required',
               'email'          => 'required|unique:patients',
               'mobile_no'      => 'required|unique:patients',
               // 'password'       => 'required|min:8|max:20|confirmed',

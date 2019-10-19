@@ -28,7 +28,9 @@ class EditRequest extends FormRequest
         $martial_status = ['Married', 'Single', 'Divorced', 'Widowed'];
         $sex            = ['Women', 'Men', 'Choose not to say'];
         return [
-              'name'           => 'required',
+              'firstname'           => 'required',
+              'middlename'           => 'required',
+              'lastname'           => 'required',
               'email'          => 'required|unique:patients,email,'. $patient,
               'mobile_no'      => 'required|unique:patients,mobile_no,' . $patient,
               'nickname'       => 'required',

@@ -21,8 +21,18 @@
               <form action="{{ route('patient.store') }}" method="POST">
                   @csrf
                   <div class="form-group">
-                    <label for="name">Fullname <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                    <label for="firstname">Firstname <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" value="{{ old('firstname') }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="middlename">Middlename <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="middlename" name="middlename" value="{{ old('middlename') }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="lastname">Lastname <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" value="{{ old('lastname') }}">
                   </div>
 
                   <div class="form-group">
@@ -53,6 +63,11 @@
                   <div class="form-group">
                     <label for="birthdate">Birthdate <span class="text-danger">*</span></label>
                     <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ old('birthdate') }}" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="age">Age <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="age" name="age" readonly value="{{ old('age') }}" >
                   </div>
 
                   <div class="form-group">
@@ -94,7 +109,12 @@
     </div>
 </div>
 @push('page-scripts')
-
+<script>
+  $('#birthdate').keyup(function (e) {
+      let birthYear = e.target.value.split('-')[0];
+      let currentYear = new Date().getFullYear();
+      $('#age').val(currentYear - birthYear);
+  });
 </script>
 @endpush
 @endsection

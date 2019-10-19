@@ -17,6 +17,7 @@ class CreatePatientInformationTable extends Migration
             $table->bigIncrements('id');
             $table->integer('patient_id');
             $table->string('nickname');
+            $table->integer('age');
             $table->date('birthdate');
             $table->enum('martial_status', ['Single', 'Married', 'Divorced', 'Widowed']);
             $table->enum('sex', ['Women', 'Men', 'Choose not to say']);

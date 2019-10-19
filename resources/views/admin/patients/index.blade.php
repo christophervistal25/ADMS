@@ -33,7 +33,7 @@
               @foreach($patients as $patient)
                 <tr>
                     <td class="text-center font-weight-bold">{{ $patient->patient_number }}</td>
-                    <td class="text-center">{{ $patient->name }}</td>
+                    <td class="text-center">{{ $patient->firstname . ' ' . $patient->middlename . ' ' . $patient->lastname }}</td>
                     <td class="text-center">{{ $patient->email }}</td>
                     <td class="text-center">{{ $patient->mobile_no }}</td>
                     <td class="text-center">{{ $patient->created_at->format('l jS \\of F Y') }}</td>
@@ -65,9 +65,19 @@
       <form id="editPatientInfoForm">
         <div class="modal-body" id="informationContainer">
             <div class="alert alert-danger hide" id="edit-patient-error-message"></div>
-            <div class="form-group">
-                <label for="name">Fullname <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="name" name="name" >
+              <div class="form-group">
+                <label for="firstname">Firstname <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="firstname" name="firstname" >
+              </div>
+
+              <div class="form-group">
+                <label for="middlename">Middlename <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="middlename" name="middlename" >
+              </div>
+
+              <div class="form-group">
+                <label for="lastname">Lastname <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="lastname" name="lastname" >
               </div>
 
               <div class="form-group">
@@ -88,6 +98,11 @@
               <div class="form-group">
                 <label for="birthdate">Birthdate <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" id="birthdate" name="birthdate" >
+              </div>
+
+              <div class="form-group">
+                <label for="age">Age <span class="text-danger">*</span></label>
+                <input type="number"  readonly class="form-control" id="age" name="age" >
               </div>
 
               <div class="form-group">
@@ -187,6 +202,12 @@
             }
           }
         });
+    });
+
+    $('#birthdate').keyup(function (e) {
+      let birthYear = e.target.value.split('-')[0];
+      let currentYear = new Date().getFullYear();
+      $('#age').val(currentYear - birthYear);
     });
   });
 </script>

@@ -33,7 +33,7 @@
                             <img class="img-responsive avatar-view" src="{{ $record->patient->profile }}" alt="Avatar" title="Change the avatar">
                           </div>
                         </div>
-                        <h3>{{ $record->patient->name }}</h3>
+                        <h3>{{ $record->patient->firstname }} {{ $record->patient->middlename }} {{ $record->patient->lastname }}</h3>
 
                         <ul class="list-unstyled user_data">
                           <li><i class="fas fa-fax"></i> {{ $record->patient->email }}

@@ -35,10 +35,13 @@ class PatientController extends Controller
     public function update(Request $request , Patient $patient)
     {
         $rules = [
-            'name'           => 'required',
+            'firstname'      => 'required',
+            'middlename'     => 'required',
+            'lastname'       => 'required',
             'email'          => 'required|email|unique:patients,email,' . $patient->id,
             'mobile_no'      => 'required|unique:patients,mobile_no,'.$patient->id,
             'nickname'       => 'required',
+            'age'            => 'required|numeric',
             'birthdate'      => 'date',
             'martial_status' => ['required',Rule::in(['Single', 'Married', 'Divorced', 'Widowed'])],
             'sex'            => ['required',Rule::in(['Women', 'Men', 'Choose not to say'])],
@@ -46,7 +49,6 @@ class PatientController extends Controller
             'home_address'   => 'required',
             'profile'        => 'nullable',
         ];
-
 
 
         if ( !is_null($request->passwoord) || !is_null($request->password_confirmation)) {
@@ -66,13 +68,16 @@ class PatientController extends Controller
         $information->birthdate      = $request->birthdate;
         $information->martial_status = $request->martial_status;
         $information->sex            = $request->sex;
+        $information->age            = $request->age;
         $information->occupation     = $request->occupation;
         $information->home_address   = $request->home_address;
 
 
-        $patient->name      = $request->name;
-        $patient->email     = $request->email;
-        $patient->mobile_no = $request->mobile_no;
+        $patient->firstname  = $request->firstname;
+        $patient->middlename = $request->middlename;
+        $patient->lastname   = $request->lastname;
+        $patient->email      = $request->email;
+        $patient->mobile_no  = $request->mobile_no;
         
         if (!is_null($request->password)) {
             $patient->password = $request->password;

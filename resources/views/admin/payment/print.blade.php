@@ -22,7 +22,7 @@
   <main>
   	<br>
   	<br>
-		<h4>Received From : {{ $examination->patient->name }}</h4>	
+		<h4>Received From : {{ $examination->patient->firstname }} {{ $examination->patient->middlename }} {{ $examination->patient->lastname }}</h4>	
 		<h4>Date : {{ date('m-d-Y') }}</h4>	
 		<h4>TIN/SC-TIN : {{ request('sc_tin') }}</h4>
 		<h4>OSCA/PWD ID No : {{ request('pwd_id') }}</h4>

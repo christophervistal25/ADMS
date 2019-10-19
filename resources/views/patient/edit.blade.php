@@ -25,8 +25,18 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="name">Fullname</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ?? Auth::user()->name }}">
+                    <label for="firstname">Firstname</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" value="{{ old('firstname') ?? Auth::user()->firstname }}">
+                  </div>
+
+                   <div class="form-group">
+                    <label for="middlename">Middlename</label>
+                    <input type="text" class="form-control" id="middlename" name="middlename" value="{{ old('middlename') ?? Auth::user()->middlename }}">
+                  </div>
+
+                   <div class="form-group">
+                    <label for="lastname">Lastname</label>
+                    <input type="text" class="form-control" id="lastname" name="lastname" value="{{ old('lastname') ?? Auth::user()->lastname }}">
                   </div>
 
                   <div class="form-group">
@@ -62,6 +72,11 @@
                   <div class="form-group">
                     <label for="birthdate">Birthdate</label>
                     <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ old('birthdate') ?? $patient->info->birthdate ?? '' }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" readonly class="form-control" id="age" name="age" value="{{ old('age') ?? $patient->info->age ?? '' }}">
                   </div>
 
                   <div class="form-group">
@@ -106,6 +121,11 @@
 </div>
 @push('page-scripts')
 <script>
+  $('#birthdate').keyup(function (e) {
+      let [birthYear , month, date]  = e.target.value.split('-');
+      let currentYear = new Date().getFullYear();
+      $('#age').val(currentYear - birthYear);
+  });
 </script>
 @endpush
 @endsection

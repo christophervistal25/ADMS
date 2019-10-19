@@ -25,11 +25,11 @@
       <span style="font-size:18px;">
         <br>
         <br>
-        Dear <b>{{ Auth::user()->name }}</b>,
+        Dear <b>{{ Auth::user()->firstname . ' ' . Auth::user()->middlename . ' ' . Auth::user()->lastname  }}</b>,
         <br>
         <br>
         <span class="text-center">
-          This letter is to confirm your appointment with <b>{{$appointment->doctor->title}} {{ $appointment->doctor->fullname }}</b> on <b>{{ $appointment->start_date->format('l jS \\of F Y h:i:s A') . ' to ' . $appointment->end_date->format('h:i:s A') }}</b>.Your service is <b>{{ $appointment->service->name }}</b> costing you <b>PHP {{ $appointment->service->price }} {{$appointment->service->per_each === 1 ? 'Per each' : '' }}</b> if you need assistance in finding the location, then kindly contact <b>{{ $mobile_no }}</b>.
+          This letter is to confirm your appointment with <b>{{$appointment->doctor->title}} {{ $appointment->doctor->fullname }}</b> on <b>{{ $appointment->start_date->format('l jS \\of F Y h:i:s A') . ' to ' . $appointment->end_date->format('h:i:s A') }}</b>.Your service is <b>{{ $appointment->service->name }}</b> if you need assistance in finding the location, then kindly contact <b>{{ $mobile_no }}</b>.
           I appreciate a response from your side confirming the same and don't forget to tell at the clinic that your patient number is {{ Auth::user()->patient_number }}.
         </span>
         <br>

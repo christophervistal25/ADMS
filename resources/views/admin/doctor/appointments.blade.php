@@ -187,6 +187,11 @@
                       <label for="mobile_no">Mobile no.</label>
                       <input type="text" id="editMobile_no"  readonly class="form-control">
                     </div>
+
+                     <div class="form-group">
+                      <label for="age">Age</label>
+                      <input type="number" id="editAge"  readonly class="form-control">
+                    </div>
               </div>
 
               <div class="col-lg-6">
@@ -331,12 +336,13 @@
           let start = $.fullCalendar.formatDate(info.start, "Y-MM-DD HH:mm:ss");
           let end = $.fullCalendar.formatDate(info.end, "Y-MM-DD HH:mm:ss");
           $('#appointmentId').val(info.id);
-          $('#editName').val(info.patient.name);
+          $('#editName').val(info.patient.firstname + ' ' + info.patient.middlename + ' ' + info.patient.lastname);
           $('#editEmail').val(info.patient.email);
           $('#editMobile_no').val(info.patient.mobile_no);
           $('#editService').val(info.service.id);
           $('#editServiceFee').val(info.service.price);
           $('#editServiceHour').val(info.service.duration);
+          $('#editAge').val(info.patient.age);
           $('#editStartTime').val(start);
           $('#editEndTime').val(end);
           $('.bs-appointment-edit-modal').modal('toggle');
@@ -410,7 +416,7 @@
    function saveToAddAppointmentForm(buttonClicked) {
       let patient = JSON.parse($(buttonClicked).attr('data-src'));
       $('#patientId').val(patient.id);
-      $('#name').val(patient.name);
+      $('#name').val(patient.firstname + ' ' + patient.middlename + ' ' +  patient.lastname);
       $('#email').val(patient.email);
       $('#mobile_no').val(patient.mobile_no);
       $('.bs-find-patient-modal').modal('hide');
@@ -441,7 +447,7 @@
                             tableBody += `
                             <tr>
                               <td>${patient.patient_number}</td>
-                              <td>${patient.name}</td>
+                              <td>${patient.firstname} ${patient.middlename} ${patient.lastname}</td>
                               <td>${patient.mobile_no}</td>
                               <td>${patient.created_at}</td>
                               <td><button class='btn btn-sm btn-primary' onclick="saveToAddAppointmentForm(this)" data-src='${JSON.stringify(patient)}'>SELECT</button></td>

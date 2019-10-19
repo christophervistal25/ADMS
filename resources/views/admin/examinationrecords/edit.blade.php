@@ -1,5 +1,5 @@
 @extends('templates.dashboard-template')
-@section('title', "Edit examination record chart for {$record->patient->name}")
+@section('title', "Edit examination record chart for " . $record->patient->firstname . ' ' . $record->patient->middlename . ' ' . $record->patient->lastname) 
 @section('content')
 @prepend('meta')
   <meta name="id" content="{{ $record->id }}">

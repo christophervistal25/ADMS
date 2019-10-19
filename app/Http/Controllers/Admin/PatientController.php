@@ -59,6 +59,7 @@ class PatientController extends Controller
             $information->sex            = $request->sex;
             $information->occupation     = $request->occupation;
             $information->home_address   = $request->home_address;
+            $information->age            = $request->age;
             $patient->name               = $request->name;
             $patient->email              = $request->email;
             $patient->mobile_no          = $request->mobile_no;
@@ -114,18 +115,22 @@ class PatientController extends Controller
          try {
             $patient = Patient::with('info')->find($id);
 
-            $info = $patient->info;
+            $info                 = $patient->info;
             $info->nickname       = $request->nickname;
             $info->birthdate      = $request->birthdate;
             $info->martial_status = $request->martial_status;
             $info->sex            = $request->sex;
             $info->occupation     = $request->occupation;
             $info->home_address   = $request->home_address;
+            $info->age     = $request->age;
 
-            $patient->name      = $request->name;
-            $patient->email     = $request->email;
-            $patient->mobile_no = $request->mobile_no;
+            $patient->firstname  = $request->firstname;
+            $patient->middlename = $request->middlename;
+            $patient->lastname   = $request->lastname;
+            $patient->email      = $request->email;
+            $patient->mobile_no  = $request->mobile_no;
 
+            $patient->save();
             $patient->info()->save($info);
             DB::commit();
             return response()->json(['success' => true]);

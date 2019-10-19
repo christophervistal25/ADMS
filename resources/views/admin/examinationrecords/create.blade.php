@@ -1,5 +1,5 @@
 @extends('templates.dashboard-template')
-@section('title', "Add examination record chart for {$patient->name}")
+@section('title', "Add examination record chart for " . $patient->firstname  . ' ' . $patient->middlename . ' ' . $patient->lastname)
 @section('content')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pnotify/3.2.1/pnotify.css"  crossorigin="anonymous" />
