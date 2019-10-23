@@ -1,0 +1,38 @@
+      // MAXIMUM FOR SERVICE IS 4
+/*       $date = Carbon::parse($year . $month . $day . '08:00');
+       $morning = $this->generateTimePeriod($date, $duration, 'morning');
+       $date = Carbon::parse($year . $month . $day . '13:00');
+       $afternoon = $this->generateTimePeriod($date, $duration, 'afternoon');
+       $results = array_merge($morning, $afternoon);
+       $exists = [];
+
+       foreach ($results as $result) {
+           $generated = explode('|', $result);
+           $startGenerated = Carbon::parse($generated[0]);
+           $endGenerated = Carbon::parse($generated[1]);
+           foreach ($appointments as $appointment) {
+                $start = Carbon::parse($appointment->start_date);
+                $end = Carbon::parse($appointment->end_date);
+                if ($startGenerated->between($start, $end) && $endGenerated->between($start, $end)) {
+                    $exists[] = $startGenerated . '|' . $endGenerated . '|exists';
+                    $index = array_search($result, $results);
+                    unset($results[$index]);
+                } 
+           }
+       }*/
+
+       $results = array_merge($results, $exists);
+
+       $timeClose = CloseDay::getBy($month, $day);
+
+       foreach ($timeClose as $time) {
+            foreach ($results as $result) {
+                $splitted = explode('|', $result);
+                $start  = Carbon::parse($splitted[0]);
+                $end    = Carbon::parse($splitted[1]);
+                if ($start->between($time->start, $time->end) && $end->between($time->start, $time->end)) {
+                    $index = array_search($result, $results);
+                    unset($results[$index]);
+                } 
+            }
+       }

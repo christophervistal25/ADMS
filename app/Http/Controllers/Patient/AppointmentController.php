@@ -28,7 +28,7 @@ class AppointmentController extends Controller
     {
         list($month, $day , $year) = explode('-', $date); 
 
-        $dates = DB::table('appointments')
+        $appointments = DB::table('appointments')
                     ->where('doctor_id', $doctorId)
                     ->whereMonth('start_date', $month)
                     ->whereDay('start_date', $day)
@@ -36,12 +36,9 @@ class AppointmentController extends Controller
                     ->orderBy('start_date', 'ASC')
                     ->get(['start_date', 'end_date']);
 
-        $timeClose = CloseDay::byTime($month, $day);
-        $availables = $this->appointmentRepo->findAvailableFor($dates, $duration);
-
-        return response()->json(['availables' => $availables, 'time_close' => $timeClose]);
+        return response()->json(['availables' => $this->appointmentRepo->availables($date, $duration, $appointments)]);
     }
-    
+
     /**
      * Display a listing of the resource.
      *

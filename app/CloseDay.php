@@ -40,6 +40,14 @@ class CloseDay extends Model
                     ->get(['start']);
 	}
 
+    public static function getBy($month, $day)
+    {
+        return self::whereYear('start', date('Y'))
+                   ->whereMonth('start', $month)
+                   ->whereDay('start', $day)
+                   ->get(['start', 'end']);
+    }
+
     public static function byTime($month, $day)
     {
         return self::where(['all_day' => 0])

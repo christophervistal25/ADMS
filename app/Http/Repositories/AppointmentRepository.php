@@ -2,15 +2,15 @@
 namespace App\Http\Repositories;
 
 use App\Appointment;
+use App\CloseDay;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
 use DB;
+use Illuminate\Support\Collection;
 
 class AppointmentRepository
 {
 	protected $appointment;
-    public const MAX_HOURS_OF_APPOINTMENT_IN_MORNING   = 4;
-    public const MAX_HOURS_OF_APPOINTMENT_IN_AFTERNOON = 4;
+    public const MAX_HOURS_OF_APPOINTMENT = 4;
 
 
 	public function __construct(Appointment $appointment)
@@ -18,126 +18,83 @@ class AppointmentRepository
 		$this->appointment = $appointment;
 	}
 
-	public function getMaxHoursInMorning()
+	public function availables($date, $duration, $appointments)
 	{
-		return self::MAX_HOURS_OF_APPOINTMENT_IN_MORNING;
+		list($month, $day, $year) = explode('-', $date);
+
+		$date      = Carbon::parse($year . $month . $day . '08:00');
+		$morning   = $this->generateTimePeriod($date, $duration, 'morning');
+
+		$date      = Carbon::parse($year . $month . $day . '13:00');
+		$afternoon = $this->generateTimePeriod($date, $duration, 'afternoon');
+
+		$timePeriods = $this->getAvailables(array_merge($morning, $afternoon), $appointments);
+
+		return array_values(array_unique($this->filterByTimeClose($timePeriods, $month, $day)));
 	}
 
-	public function getMaxHoursInAfternoon()
+	public function filterByTimeClose($timePeriods, $month, $day)
 	{
-		return self::MAX_HOURS_OF_APPOINTMENT_IN_AFTERNOON;
+		$timeClose = CloseDay::getBy($month, $day);
+		 foreach ($timeClose as $time) {
+
+            foreach ($timePeriods as $result) {
+                $splitted = explode('|', $result);
+                $start  = Carbon::parse($splitted[0]);
+                $end    = Carbon::parse($splitted[1]);
+
+                if ($start->between($time->start, $time->end) && $end->between($time->start, $time->end)) {
+                    $index = array_search($result, $timePeriods);
+                    unset($timePeriods[$index]);
+                } 
+
+            }
+
+       }
+       return $timePeriods;
 	}
 
-	private function has($results, string $greeting)
+	public function getAvailables(array $results = [], $appointments)
 	{
-		return array_key_exists($greeting, $results);
+		$exists = [];
+		foreach ($results as $result) {
+			list($createdStart, $createdEnd) = explode('|', $result);
+			$startGenerated                  = Carbon::parse($createdStart);
+			$endGenerated                    = Carbon::parse($createdEnd);
+
+           foreach ($appointments as $appointment) {
+				$start = Carbon::parse($appointment->start_date);
+				$end   = Carbon::parse($appointment->end_date);
+
+                if ( $startGenerated->between($start, $end) && $endGenerated->between($start, $end) 
+                	|| $start->between($startGenerated, $endGenerated) && $end->between($startGenerated, $endGenerated) ) {
+					$exists[] = $startGenerated . '|' . $endGenerated . '|exists';
+					$index    = array_search($result, $results);
+					unset($results[$index]);
+                } 
+
+           }
+
+       }
+
+       return array_values(array_merge($results, $exists));
 	}
 
-	private function getGreetingResult(array $results, string $greeting, int $duration)
-	{
-		$hours = ($greeting == 'morning') ? self::MAX_HOURS_OF_APPOINTMENT_IN_MORNING : self::MAX_HOURS_OF_APPOINTMENT_IN_AFTERNOON;
-		return (array_sum($results[$greeting]['result']) + $duration) > $hours ? false : true;
-	}
-
-	private function getVacantGreeting(array $results = [], int $duration)
-	{
-		$results = [
-				'morning'   => $this->has($results, 'morning') ? $this->getGreetingResult($results, 'morning', $duration) : true,
-				'afternoon' => $this->has($results, 'afternoon') ? $this->getGreetingResult($results, 'afternoon', $duration) : true,
-		];	
-		return array_filter($results);
-	}
-
-	public function findAvailableFor(Collection $dates, string $duration)
+	public function generateTimePeriod($date, $increment, $greet)
 	{
 		$results = [];
-		$generatedVacantTime = [];
-		foreach ($dates as $key => $date) {
-			$end       = Carbon::parse($date->end_date);
-			$start     = Carbon::parse($date->start_date);
-			$session = $start->format('H') >= '12'  ? 'afternoon' : 'morning';
-			$results[$session]['start'][]  = $start->format('H');
-			$results[$session]['end'][]    = $end->format('H');
-			$results[$session]['result'][] = $end->diffInHours($start);
-		}
-		
+		$end = ($greet === 'morning') ? 13 : 18;
+		$noOfIteration = (int) floor(self::MAX_HOURS_OF_APPOINTMENT / $increment);
 
-		$vacants = $this->getVacantGreeting($results, $duration);
-
-		if (count($vacants) > 0) {
-			foreach (array_keys($vacants) as $vacant) {
-				$method = 'getMaxHoursIn' . ucfirst($vacant);
-
-				if (!$this->has($results, 'morning') && $vacant === 'morning') {
-					$lastTime = 8;
-					for($i = 0; $i<=($this->$method() - $duration); $i+=$duration)
-					{
-						// End time
-						$endTime = $lastTime + $duration;
-
-						$generatedVacantTime['morning'][] = $lastTime  . ' - ' . $endTime;
-
-						// Change the current end time
-						$lastTime  = $endTime;
-					}
-				} 
-
-				if (!$this->has($results, 'afternoon') && $vacant === 'afternoon') {
-					$lastTime = 13;
-					for($i = 0; $i<=($this->$method() - $duration); $i+=$duration)
-					{
-						// End time
-						$endTime = $lastTime + $duration;
-
-						$generatedVacantTime['afternoon'][] = $lastTime  . ' - ' . $endTime;
-
-						// Change the current end time
-						$lastTime  = $endTime;
-					}
-				}
-				
-				// If there's already an appoint in morning and afternoon
-				if ($this->has($results, 'morning') && $this->has($results, 'afternoon') ) {
-					for($i = 1; $i<= ($this->$method() - array_sum($results[$vacant]['result'])); $i+=$duration)
-					{
-						// Get the last end time this will need an OrderBy in Query
-						$lastTime = end($results[$vacant]['end']);
-
-						// 17 is the closing time of the store.
-						if ($lastTime != 17) {
-							// End time
-							$endTime = $lastTime + $duration;
-
-							$generatedVacantTime[$vacant][] = $lastTime  . ' - ' . $endTime;
-
-							// Remove the last value in current end time
-							array_pop($results[$vacant]['end']);
-
-							// Push the new end time
-							array_push($results[$vacant]['end'], $endTime);
-						} else { // Meron ng naka book sa last which is 4-5 but depends on the service.
-
-							$lastTime = end($results[$vacant]['start']);
-
-							// End time
-							$endTime = $lastTime - $duration;
-							
-							$generatedVacantTime[$vacant][] = $endTime  . ' - ' . $lastTime;
-
-							// Remove the last value in current end time
-							array_shift($results[$vacant]['start']);
-
-							// Push the new end time
-							array_unshift($results[$vacant]['start'], $endTime);
-						}
-					}	
-				}
-			}	
-		} else {
-			return [];
+		foreach (range(1, $noOfIteration) as $index => $value) {
+			$startTime   = $date->format('H:00');
+			$endTime     = $date->addHour($increment)->format('H:00');
+			if ($endTime >= $end) { break; }
+			$results[]   =  $date->format('Y-m-d ') . $startTime . '|' . $date->format('Y-m-d ') . $endTime;
 		}
 
-		return $generatedVacantTime;
+		return $results;
 	}
+
 
 }

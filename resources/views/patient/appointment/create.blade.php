@@ -19,7 +19,7 @@
               @if(is_null(Auth::user()->info))
                   <h3 class="text-center">Sorry but you can't set an appoint please complete your profile first. <a href="/patient/edit" class="btn btn-success btn-sm">Update profile</a></h3>
                 @else
-                  <div class="alert alert-danger" role="alert">
+                  <div class="alert alert-danger" style="color :white;" role="alert">
                     <b>NOTE: There are some disabled dates which means on that date the clinic is close.</b>
                     <br>
                     <b>NOTE: Please select Service & Doctor first.</b>
@@ -38,12 +38,12 @@
                       </select>
                   </div>
 
-                  <div class="form-group col-lg-3">
+                  <div class="form-group col-lg-3 hide">
                         <label for="price">Service fee</label>
                         <input type="text" readonly id="price" name="price" class="form-control">
                   </div>
 
-                  <div class="form-group col-lg-3">
+                  <div class="form-group col-lg-6">
                         <label for="hour">Service Hour</label>
                         <input type="text" readonly id="hour" name="duration" class="form-control">
                   </div>
@@ -144,43 +144,26 @@
         
     }
 
-    let displayVacantsTime = (response, property) => {
-        if (response.availables[property]) {
-          let vacants = "";
-          let hasTimeClose = response.time_close.length !== 0;
-          // new Set removing the duplicate values.
-          let unique = [...new Set(response.availables[property])];
-            unique.forEach((data) => {
-              let start = `${$('#datetimepicker1').find('input').val()} ${data.split(' - ')[0]}:00:00`;
-              let end   = `${$('#datetimepicker1').find('input').val()} ${data.split(' - ')[1]}:00:00`;
-              let format = 'hh:mm';
-                if (hasTimeClose) {
-                    response.time_close.forEach((time) => {
-                      let betweenCloseTime = moment(
-                              new Date(start), format).isBetween(moment(new Date(time.start), format),
-                              moment(new Date(time.end), format),
-                              null,
-                              '[)'
-                        );
-                      if (!betweenCloseTime) {
-                        vacants += `  <tr>
+    let displayVacantsTime = (response) => {
+        let vacants = "";
+        response.availables.forEach((data) => {
+            let [start, end, status] = data.split('|');
+            if (status === 'exists') {
+              vacants += `  <tr>
                               <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
-                              <td class="text-center"><b>${property.toUpperCase()}</b></td>
+                              <td class="text-center"><b><span class="label label-danger">Exists</span></b></td>
+                              <td class="text-center"><button class="btn btn-sm btn-primary" type="button" disabled>Select</button></td>
+              </tr>`;  
+            } else {
+              vacants += `  <tr>
+                              <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
+                              <td class="text-center"><b><span class="label label-success">Available</span></b></td>
                               <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
-                            </tr>`;
-                          
-                      }
-                    });
-                } else {
-                       vacants += `  <tr>
-                          <td class="text-center"><b>${moment(new Date(start)).format('hA')} - ${moment(new Date(end)).format('hA')}</b></td>
-                          <td class="text-center"><b>${property.toUpperCase()}</b></td>
-                          <td class="text-center"><button onclick="alreadySelectATime(this)" class="btn btn-sm btn-primary" type="button" data-start="${start}" data-end="${end}">Select</button></td>
-                        </tr>`;        
-                }
-            });
-            $('#vacants').append(vacants);
-        }
+              </tr>`;  
+            }
+            
+        });
+        $('#vacants').append(vacants);
         $('#recommendTime').removeClass('hide');
     };
 
@@ -200,8 +183,7 @@
             url : `/patient/appointment/available/${selectedDate}/${doctorId}/${serviceDuration}`,
             type : 'GET',
             success : function (response) {
-                displayVacantsTime(response, 'morning');
-                displayVacantsTime(response, 'afternoon');
+                displayVacantsTime(response);
             },
           });
       } else {
