@@ -191,7 +191,7 @@
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                             @foreach($appointmentsToday as $appointment)
                               <li>
-                                <a>
+                                <a href="/admin/doctor/{{$doctor->id}}">
                                   <span class="image"><img src="{{ $appointment->patients[0]->profile }}"></span>
                                   <span>
                                     <span><b>{{ $appointment->patients[0]->firstname }} {{ $appointment->patients[0]->middlename }} {{ $appointment->patients[0]->lastname }}</b></span>
