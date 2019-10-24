@@ -73,7 +73,7 @@
                       <thead>
                         <tr>
                           <td class="text-center">Time</td>
-                          <td class="text-center">Session</td>
+                          <td class="text-center">Status</td>
                           <td class="text-center">Action</td>
                         </tr>
                       </thead>

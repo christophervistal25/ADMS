@@ -33,7 +33,7 @@ class AppointmentRepository
 		return array_values(array_unique($this->filterByTimeClose($timePeriods, $month, $day)));
 	}
 
-	public function filterByTimeClose($timePeriods, $month, $day)
+	private function filterByTimeClose($timePeriods, $month, $day)
 	{
 		$timeClose = CloseDay::getBy($month, $day);
 		 foreach ($timeClose as $time) {
@@ -54,7 +54,7 @@ class AppointmentRepository
        return $timePeriods;
 	}
 
-	public function getAvailables(array $results = [], $appointments)
+	private function getAvailables(array $results = [], $appointments)
 	{
 		$exists = [];
 		foreach ($results as $result) {
@@ -80,7 +80,7 @@ class AppointmentRepository
        return array_values(array_merge($results, $exists));
 	}
 
-	public function generateTimePeriod($date, $increment, $greet)
+	private function generateTimePeriod($date, $increment, $greet)
 	{
 		$results = [];
 		$end = ($greet === 'morning') ? 13 : 18;
