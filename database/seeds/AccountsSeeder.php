@@ -39,7 +39,7 @@ class AccountsSeeder extends Seeder
         Admin::create([
             'name' => 'Administrator Apit',
             'email' => 'admin@yahoo.com',
-            'password' => 'qwerty1234',
+            'password' => 'qwerty12345',
         ]);
     }
 }
